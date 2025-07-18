@@ -1,0 +1,8 @@
+**/node_modules
+**/.svelte-kit
+**/.vercel
+.github/CODEOWNERS
+**/.DS_Store
+.prettierignore
+.changeset
+bun.lock

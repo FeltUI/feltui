@@ -1,0 +1,31 @@
+{
+  "useTabs": true,
+  "tabWidth": 4,
+  "singleQuote": false,
+  "printWidth": 80,
+  "trailingComma": "all",
+  "plugins": ["prettier-plugin-svelte"],
+  "overrides": [
+    {
+      "files": ["*.svelte"],
+      "options": {
+        "bracketSameLine": false
+      }
+    },
+    {
+      "files": [
+        "README.md",
+        "packages/*/README.md",
+        "**/package.json",
+        ".prettierrc",
+        "eslint.config.js",
+        "*.json",
+        "*.yml"
+      ],
+      "options": {
+        "useTabs": false,
+        "tabWidth": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "feltui-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "prettier --check . && eslint .",
+    "lint:fix": "prettier --write . && eslint . --fix",
+    "sv": "cd packages/svelte && bun",
+    "vue": "cd packages/vue && bun"
+  }
+}

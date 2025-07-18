@@ -1,0 +1,27 @@
+{
+  "name": "@feltui/shared",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./css": {
+      "default": "./src/css/index.scss"
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-lube": "^0.5.0",
+    "eslint-plugin-prettier": "^5.5.1",
+    "prettier": "^3.6.2",
+    "typescript-eslint": "^8.37.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
