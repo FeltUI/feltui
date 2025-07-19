@@ -1,0 +1,132 @@
+@use "../mixins";
+
+.felt-button {
+	position: relative;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 10rem;
+
+	@include mixins.typography(label-large);
+	color: var(--ripple-color);
+
+	cursor: pointer;
+
+	transition: border-radius 0.3s cubic-bezier(0.3, 0.3, 0.3, 1.15);
+
+	/* #region:    --- Sizes */
+	&--xs {
+		height: 2rem;
+		padding-inline: 0.75rem;
+		gap: 0.25rem;
+	}
+
+	&--sm {
+		height: 2.5rem;
+		padding-inline: 1rem;
+		gap: 0.5rem;
+	}
+
+	&--md {
+		height: 3.5rem;
+		padding-inline: 1.5rem;
+		gap: 0.5rem;
+		@include mixins.typography(title-medium);
+	}
+
+	&--lg {
+		height: 6rem;
+		padding-inline: 3rem;
+		gap: 0.75rem;
+		@include mixins.typography(headline-small);
+	}
+
+	&--xl {
+		height: 8.5rem;
+		padding-inline: 4rem;
+		gap: 1rem;
+		@include mixins.typography(headline-large);
+	}
+	/* #endregion: --- Sizes */
+
+	/* #region:    --- Shape */
+	&--squared {
+		&.felt-button--xs,
+		&.felt-button--sm {
+			border-radius: 0.75rem;
+		}
+
+		&.felt-button--md {
+			border-radius: 1rem;
+		}
+
+		&.felt-button--lg,
+		&.felt-button--xl {
+			border-radius: 1.75rem;
+		}
+	}
+	/* #endregion: --- Border radius */
+
+	/* #region:    --- Variants */
+	&--elevated,
+	&--unelevated {
+		background-color: var(--surface-container-low);
+		--ripple-color: var(--primary);
+	}
+
+	&--elevated {
+		box-shadow: var(--elevation-1);
+	}
+
+	&--filled {
+		background-color: var(--primary);
+		--ripple-color: var(--on-primary);
+	}
+
+	&--tonal {
+		background-color: var(--secondary-container);
+		--ripple-color: var(--on-secondary-container);
+	}
+
+	&--outlined {
+		background-color: transparent;
+		--ripple-color: var(--on-surface-variant);
+		border: 1px solid var(--outline);
+	}
+
+	&--text {
+		background-color: transparent;
+		--ripple-color: var(--primary);
+	}
+	/* #endregion: --- Variants */
+
+	@include mixins.enabled() {
+		&:hover {
+			@include mixins.overlay(0.08);
+		}
+
+		&:is(:active, :focus) {
+			@include mixins.overlay(0.1);
+		}
+
+		&:active {
+			&.felt-button--xs,
+			&.felt-button--sm {
+				border-radius: 0.5rem;
+			}
+
+			&.felt-button--md {
+				border-radius: 0.75rem;
+			}
+
+			&.felt-button--lg,
+			&.felt-button--xl {
+				border-radius: 1rem;
+			}
+		}
+
+		@include mixins.focus-ring();
+	}
+}

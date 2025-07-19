@@ -1,4 +1,5 @@
 <script lang="ts">
+	import "@feltui/shared/css";
 </script>
 
 <h1>Welcome to your library project</h1>

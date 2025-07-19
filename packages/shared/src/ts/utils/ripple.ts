@@ -1,5 +1,6 @@
 import type { Attachment } from "svelte/attachments";
 import { on } from "svelte/events";
+import { isActionKey } from "./events";
 
 interface RippleOptions {
 	center?: boolean;
@@ -27,7 +28,9 @@ function listen(
 	handler: (event: Event) => void
 ) {
 	if (framework === "svelte") {
-		return on(node, event, handler, { passive: event.startsWith("touch") });
+		return on(node, event, handler, {
+			passive: event.startsWith("touch"),
+		});
 	} else {
 		node.addEventListener(event, handler, {
 			passive: event.startsWith("touch"),
@@ -39,14 +42,24 @@ function listen(
 export function rippleSvelte(options: RippleOptions): Attachment<HTMLElement> {
 	return (node) => {
 		if (isDisabled(node, options)) {
+			node.querySelector(".felt-ripple__container")?.remove();
+
 			return;
 		}
+
+		const rippleContainer = createRippleContainer(node, options);
 
 		const framework = "svelte";
 
 		triggerEvents.map((event) => {
 			listen(framework, node, event, (e) => {
-				createRipple(framework, node, e as TriggerEvent, options);
+				createRipple(
+					framework,
+					node,
+					rippleContainer,
+					e as TriggerEvent,
+					options
+				);
 			});
 		});
 	};
@@ -60,19 +73,11 @@ function isDisabled(node: HTMLElement, options: RippleOptions): boolean {
 	);
 }
 
-function createRippleContainer(
-	node: HTMLElement,
-	options: RippleOptions,
-	center?: boolean
-) {
+function createRippleContainer(node: HTMLElement, options: RippleOptions) {
 	const rippleContainer = document.createElement("span");
+	setOptions(rippleContainer, options);
 
 	rippleContainer.classList.add("felt-ripple__container");
-
-	const isCentered = center ?? options.center;
-	if (isCentered) {
-		rippleContainer.classList.add("felt-ripple--centered");
-	}
 
 	return node.appendChild(rippleContainer);
 }
@@ -95,16 +100,21 @@ function setOptions(rippleContainer: HTMLElement, options: RippleOptions) {
 function createRipple(
 	framework: "svelte" | "vue",
 	node: HTMLElement,
+	rippleContainer: HTMLElement,
 	e: PointerEvent | MouseEvent | TouchEvent,
 	options: RippleOptions,
 	center?: boolean
 ) {
-	if (handleKeyboardRipple(framework, node, e, options)) {
+	if (handleKeyboardRipple(framework, node, rippleContainer, e, options)) {
 		return;
 	}
 
-	const rippleContainer = createRippleContainer(node, options, center);
-	setOptions(rippleContainer, options);
+	const isCentered = center ?? options.center;
+	if (isCentered) {
+		rippleContainer.classList.add("felt-ripple--centered");
+	} else {
+		rippleContainer.classList.remove("felt-ripple--centered");
+	}
 
 	const ripple = document.createElement("span");
 
@@ -114,6 +124,7 @@ function createRipple(
 function handleKeyboardRipple(
 	framework: "svelte" | "vue",
 	node: HTMLElement,
+	rippleContainer: HTMLElement,
 	e: PointerEvent | MouseEvent | TouchEvent,
 	options: RippleOptions
 ) {
@@ -121,13 +132,14 @@ function handleKeyboardRipple(
 		return false;
 	}
 
-	if (!["Enter", "Space"].includes(e.key) || e.repeat) {
+	if (!isActionKey(e) || e.repeat) {
 		return true;
 	}
 
 	e.preventDefault();
 	const click = new PointerEvent("pointerdown");
-	createRipple(framework, node, click, options, true);
+
+	createRipple(framework, node, rippleContainer, click, options, true);
 
 	return true;
 }

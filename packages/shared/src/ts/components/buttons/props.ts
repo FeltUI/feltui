@@ -20,9 +20,9 @@ export interface ButtonBaseProps extends ClickableComponent {
 
 export interface ButtonWithShapeProps {
 	/**
-	 * Shape of the button, whether it is square or round.
+	 * Shape of the button, whether it is squared or rounded.
 	 */
-	shape?: "square" | "round";
+	shape?: "squared" | "rounded";
 }
 
 export interface ButtonWithVariantProps {

@@ -11,7 +11,7 @@
 		cubic-bezier(0.4, 0, 0.2, 1);
 	animation: ripple var(--ripple-duration, 0.4s) cubic-bezier(0.4, 0, 0.2, 1);
 
-	&--center .felt-ripple {
+	&--centered .felt-ripple {
 		top: 50% !important;
 		left: 50% !important;
 		translate: -50% -50% !important;
@@ -23,6 +23,8 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
+		border-radius: inherit;
+		transition: inherit;
 		overflow: hidden;
 		background: none;
 		pointer-events: none;

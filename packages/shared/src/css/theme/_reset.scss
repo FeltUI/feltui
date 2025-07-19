@@ -1,3 +1,5 @@
+@use "@fontsource/roboto";
+
 * {
 	-webkit-tap-highlight-color: transparent;
 	position: relative;
@@ -14,15 +16,8 @@ body {
 	min-height: 100%;
 	width: 100%;
 	color: var(--on-surface);
-	background-color: var(--surface);
-}
-
-body,
-body > div:not(.felt-tooltip) {
 	background-color: var(--surface-container-lowest);
-	overflow-x: hidden;
-	height: 100vh;
-	width: 100%;
+	font-family: "Roboto", sans-serif;
 }
 
 label {
