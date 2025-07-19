@@ -1,5 +1,4 @@
 import type { Attachment } from "svelte/attachments";
-import { isElementDisabled } from "./dom";
 import { on } from "svelte/events";
 
 interface RippleOptions {
@@ -9,319 +8,215 @@ interface RippleOptions {
 	disabled?: boolean; // Should the ripple be disabled
 }
 
-type Unlistener = ReturnType<typeof on>;
+type TriggerEvent = PointerEvent | MouseEvent | TouchEvent;
 
-// Constants
-const TRIGGER_EVENTS = ["pointerdown", "touchstart", "keydown"] as const;
-const CANCEL_EVENTS = [
+const triggerEvents = ["pointerdown", "touchstart", "keydown"] as const;
+const cancelEvents = [
 	"mouseleave",
 	"dragleave",
 	"touchmove",
 	"touchcancel",
 	"pointerup",
 	"keyup",
-] as const;
+];
 
-const RIPPLE_CLASS = "felt-ripple";
-const CENTER_RIPPLE_CLASS = "felt-ripple--centered";
-
-const CSS_VARS = {
-	COLOR: "--ripple-color",
-	DURATION: "--ripple-duration",
-} as const;
-
-const DEFAULTS = {
-	DURATION: 1000,
-	KEYBOARD_KEYS: ["Enter", "Space"],
-};
-
-interface RippleCoordinates {
-	x: number;
-	y: number;
-	radius: number;
-}
-
-interface CreateRippleParams {
-	event: PointerEvent | KeyboardEvent | TouchEvent;
-	node: HTMLElement;
-	rippleContainer: HTMLElement;
-	options: RippleOptions;
-	center?: boolean;
-	onCancel: (
-		node: HTMLElement,
-		eventName: string,
-		ripple?: HTMLSpanElement | null
-	) => void;
-}
-
-/**
- * Creates a ripple effect attachment for Svelte components.
- *
- * @param options Ripple options to customize the behavior and appearance of the ripple effect.
- * @returns A Svelte attachment for the ripple effect.
- */
-export function rippleSvelte(options: RippleOptions = {}): Attachment {
-	const rippleContainer = createRippleContainer(options);
-	const eventListeners = createEventListenerTrackers();
-
-	return (node) => {
-		if (!isValidNode(node)) return;
-
-		setupRippleContainer(node, rippleContainer, options);
-		attachTriggerEvents(node, rippleContainer, options, eventListeners);
-
-		return () =>
-			cleanupEventListeners(eventListeners, node, rippleContainer);
-	};
-}
-
-function createRippleContainer(options: RippleOptions): HTMLSpanElement {
-	const container = document.createElement("span");
-	applyRippleClasses(container, options);
-	return container;
-}
-
-function createEventListenerTrackers() {
-	return {
-		trigger: [] as Unlistener[],
-		cancel: [] as Unlistener[],
-	};
-}
-
-function isValidNode(node: unknown): node is HTMLElement {
-	return node instanceof HTMLElement;
-}
-
-function setupRippleContainer(
+function listen(
+	framework: "svelte" | "vue",
 	node: HTMLElement,
-	container: HTMLElement,
-	options: RippleOptions
-): void {
-	const shouldDisable =
-		options.disabled ||
-		node.hasAttribute("aria-disabled") ||
-		node.hasAttribute("disabled");
-
-	if (shouldDisable) {
-		container.remove();
-		return;
-	}
-
-	node.appendChild(container);
-	applyRippleStyles(container, options);
-}
-
-function attachTriggerEvents(
-	node: HTMLElement,
-	rippleContainer: HTMLElement,
-	options: RippleOptions,
-	eventListeners: ReturnType<typeof createEventListenerTrackers>
-): void {
-	TRIGGER_EVENTS.forEach((eventName) => {
-		const listener = on(
-			node,
-			eventName,
-			(event) =>
-				handleRippleCreation({
-					event,
-					node,
-					rippleContainer,
-					options,
-					onCancel: createCancelHandler(options.duration),
-				}),
-			{ passive: eventName === "touchstart" }
-		);
-		eventListeners.trigger.push(listener);
-	});
-}
-
-function createCancelHandler(duration = DEFAULTS.DURATION) {
-	return (
-		node: HTMLElement,
-		eventName: string,
-		ripple: HTMLSpanElement | null = null
-	) => {
-		if (!ripple) return;
-
-		ripple.style.opacity = "0";
-		setTimeout(() => ripple.remove(), duration);
-
-		const unlisten = on(node, eventName, () => {}, { passive: true });
-		return unlisten;
-	};
-}
-
-function cleanupEventListeners(
-	eventListeners: ReturnType<typeof createEventListenerTrackers>,
-	node: HTMLElement,
-	rippleContainer: HTMLElement
-): void {
-	[...eventListeners.trigger, ...eventListeners.cancel].forEach((unlisten) =>
-		unlisten()
-	);
-	eventListeners.trigger.length = 0;
-	eventListeners.cancel.length = 0;
-
-	if (rippleContainer.parentNode === node) {
-		rippleContainer.remove();
-	}
-}
-
-function handleRippleCreation(params: CreateRippleParams): void {
-	const { event, node, options } = params;
-
-	if (options.disabled || isElementDisabled(node)) return;
-
-	if (isKeyboardEvent(event)) {
-		handleKeyboardRipple(params);
-		return;
-	}
-
-	createVisualRipple(params);
-}
-
-function isKeyboardEvent(event: Event): event is KeyboardEvent {
-	return event instanceof KeyboardEvent;
-}
-
-function handleKeyboardRipple(params: CreateRippleParams): void {
-	const { event } = params;
-	const keyEvent = event as KeyboardEvent;
-
-	if (!DEFAULTS.KEYBOARD_KEYS.includes(keyEvent.key) || keyEvent.repeat)
-		return;
-
-	keyEvent.preventDefault();
-	const syntheticPointerEvent = new PointerEvent("pointerdown");
-
-	createVisualRipple({
-		...params,
-		event: syntheticPointerEvent,
-		center: true,
-	});
-}
-
-function createVisualRipple({
-	event,
-	node,
-	rippleContainer,
-	options,
-	center,
-	onCancel,
-}: CreateRippleParams): void {
-	applyRippleClasses(node, options, center);
-
-	const coordinates = calculateRippleCoordinates(
-		event,
-		node,
-		center || options.center
-	);
-	const rippleElement = createRippleElement(coordinates);
-
-	rippleContainer.appendChild(rippleElement);
-	attachCancelEvents(node, rippleElement, onCancel);
-}
-
-function calculateRippleCoordinates(
-	event: PointerEvent | KeyboardEvent | TouchEvent,
-	node: HTMLElement,
-	isCentered = false
-): RippleCoordinates {
-	const rect = node.getBoundingClientRect();
-
-	if (isCentered) {
-		const centerX = rect.width / 2;
-		const centerY = rect.height / 2;
-		const radius = Math.max(centerX, centerY);
-
-		return {
-			x: centerX - radius,
-			y: centerY - radius,
-			radius: radius * 2,
-		};
-	}
-
-	const { clientX, clientY } = extractEventCoordinates(event);
-
-	const relativeX = clientX - rect.left;
-	const relativeY = clientY - rect.top;
-
-	const distanceToEdgeX = relativeX > node.offsetWidth / 2 ? 0 : rect.width;
-	const distanceToEdgeY = relativeY > node.offsetHeight / 2 ? 0 : rect.height;
-
-	const radius = Math.hypot(
-		distanceToEdgeX - relativeX,
-		distanceToEdgeY - relativeY
-	);
-
-	return {
-		x: relativeX - radius,
-		y: relativeY - radius,
-		radius: radius * 2,
-	};
-}
-
-function extractEventCoordinates(
-	event: PointerEvent | KeyboardEvent | TouchEvent
+	event: string,
+	handler: (event: Event) => void
 ) {
-	if (window.TouchEvent && event instanceof TouchEvent) {
-		return {
-			clientX: event.touches[0]?.clientX || 0,
-			clientY: event.touches[0]?.clientY || 0,
-		};
+	if (framework === "svelte") {
+		return on(node, event, handler, { passive: event.startsWith("touch") });
+	} else {
+		node.addEventListener(event, handler, {
+			passive: event.startsWith("touch"),
+		});
+		return () => node.removeEventListener(event, handler);
 	}
-
-	const pointerEvent = event as PointerEvent;
-	return pointerEvent;
 }
 
-function createRippleElement(coordinates: RippleCoordinates): HTMLSpanElement {
-	const ripple = document.createElement("span");
-	ripple.classList.add(RIPPLE_CLASS);
+export function rippleSvelte(options: RippleOptions): Attachment<HTMLElement> {
+	return (node) => {
+		if (isDisabled(node, options)) {
+			return;
+		}
 
-	Object.assign(ripple.style, {
-		left: `${coordinates.x}px`,
-		top: `${coordinates.y}px`,
-		width: `${coordinates.radius}px`,
-		height: `${coordinates.radius}px`,
-	});
+		const framework = "svelte";
 
-	return ripple;
+		triggerEvents.map((event) => {
+			listen(framework, node, event, (e) => {
+				createRipple(framework, node, e as TriggerEvent, options);
+			});
+		});
+	};
 }
 
-function attachCancelEvents(
+function isDisabled(node: HTMLElement, options: RippleOptions): boolean {
+	return (
+		options.disabled ||
+		node.hasAttribute("disabled") ||
+		node.hasAttribute("aria-disabled")
+	);
+}
+
+function createRippleContainer(
 	node: HTMLElement,
-	rippleElement: HTMLSpanElement,
-	onCancel: CreateRippleParams["onCancel"]
-): void {
-	CANCEL_EVENTS.forEach((eventName) => {
-		onCancel(node, eventName, rippleElement);
-	});
-}
-
-function applyRippleClasses<El extends Element>(
-	container: El,
 	options: RippleOptions,
 	center?: boolean
-): void {
-	const shouldBeCentered = center || options.center;
+) {
+	const rippleContainer = document.createElement("span");
 
-	container.classList.add(RIPPLE_CLASS);
-	container.classList.toggle(CENTER_RIPPLE_CLASS, shouldBeCentered);
+	rippleContainer.classList.add("felt-ripple__container");
+
+	const isCentered = center ?? options.center;
+	if (isCentered) {
+		rippleContainer.classList.add("felt-ripple--centered");
+	}
+
+	return node.appendChild(rippleContainer);
 }
 
-function applyRippleStyles(
-	container: HTMLElement,
-	options: RippleOptions
-): void {
-	const validDuration =
-		options.duration && options.duration > 0 ? options.duration : undefined;
+function setOptions(rippleContainer: HTMLElement, options: RippleOptions) {
+	options.duration = Math.max(options.duration ?? 300, 0);
 
 	if (options.color) {
-		container.style.setProperty(CSS_VARS.COLOR, options.color);
+		rippleContainer.style.setProperty("--ripple-color", options.color);
 	}
 
-	if (validDuration) {
-		container.style.setProperty(CSS_VARS.DURATION, `${validDuration}ms`);
+	if (options.duration) {
+		rippleContainer.style.setProperty(
+			"--ripple-duration",
+			`${options.duration}ms`
+		);
 	}
+}
+
+function createRipple(
+	framework: "svelte" | "vue",
+	node: HTMLElement,
+	e: PointerEvent | MouseEvent | TouchEvent,
+	options: RippleOptions,
+	center?: boolean
+) {
+	if (handleKeyboardRipple(framework, node, e, options)) {
+		return;
+	}
+
+	const rippleContainer = createRippleContainer(node, options, center);
+	setOptions(rippleContainer, options);
+
+	const ripple = document.createElement("span");
+
+	createRippleEffect(framework, node, rippleContainer, ripple, e, options);
+}
+
+function handleKeyboardRipple(
+	framework: "svelte" | "vue",
+	node: HTMLElement,
+	e: PointerEvent | MouseEvent | TouchEvent,
+	options: RippleOptions
+) {
+	if (!(e instanceof KeyboardEvent)) {
+		return false;
+	}
+
+	if (!["Enter", "Space"].includes(e.key) || e.repeat) {
+		return true;
+	}
+
+	e.preventDefault();
+	const click = new PointerEvent("pointerdown");
+	createRipple(framework, node, click, options, true);
+
+	return true;
+}
+
+function getRectAndEventPosition(
+	node: HTMLElement,
+	e: PointerEvent | MouseEvent | TouchEvent
+) {
+	const rect = node.getBoundingClientRect();
+
+	const clientX =
+		window.TouchEvent && e instanceof TouchEvent
+			? e.touches[0]?.clientX || 0
+			: (e as PointerEvent).clientX;
+
+	const clientY =
+		window.TouchEvent && e instanceof TouchEvent
+			? e.touches[0]?.clientY || 0
+			: (e as PointerEvent).clientY;
+
+	return { rect, clientX, clientY };
+}
+
+function calculateRipplePosition(
+	pos: ReturnType<typeof getRectAndEventPosition>,
+	node: HTMLElement
+) {
+	const { rect, clientX, clientY } = pos;
+
+	const x = clientX - rect.left > node.offsetWidth / 2 ? 0 : node.offsetWidth;
+	const y =
+		clientY - rect.top > node.offsetHeight / 2 ? 0 : node.offsetHeight;
+
+	const radius = Math.hypot(
+		x - (clientX - rect.left),
+		y - (clientY - rect.top)
+	);
+
+	return {
+		left: clientX - rect.left - radius,
+		top: clientY - rect.top - radius,
+		width: radius * 2,
+		height: radius * 2,
+	};
+}
+
+function createRippleEffect(
+	framework: "svelte" | "vue",
+	node: HTMLElement,
+	container: HTMLSpanElement,
+	ripple: HTMLSpanElement,
+	e: PointerEvent | MouseEvent | TouchEvent,
+	options: RippleOptions
+) {
+	const pos = getRectAndEventPosition(node, e);
+	const { left, top, width, height } = calculateRipplePosition(pos, node);
+
+	ripple.classList.add("felt-ripple");
+
+	Object.assign(ripple.style, {
+		left: `${left}px`,
+		top: `${top}px`,
+		width: `${width}px`,
+		height: `${height}px`,
+	});
+
+	container.appendChild(ripple);
+
+	const cancelEventsListeners = cancelEvents.map((event) =>
+		listen(framework, node, event, () => {
+			handleCancelEvents(ripple, options, cancelEventsListeners);
+		})
+	);
+}
+
+function handleCancelEvents(
+	ripple: HTMLSpanElement | null,
+	options: RippleOptions,
+	listeners: (() => void)[] = []
+) {
+	if (ripple === null) {
+		return;
+	}
+
+	ripple.style.opacity = "0";
+
+	setTimeout(() => {
+		ripple.remove();
+	}, options.duration);
+
+	listeners.forEach((cleanup) => cleanup());
 }
