@@ -1,6 +1,8 @@
 import js from "@eslint/js";
 import ts from "typescript-eslint";
 import svelte from "eslint-plugin-svelte";
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
 import prettier from "eslint-config-prettier";
 import globals from "globals";
 
@@ -8,6 +10,7 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   js.configs.recommended,
+  ...storybook.configs["flat/recommended"],
   ...ts.config(...ts.configs.recommended, {
     rules: {
       "@typescript-eslint/no-unused-vars": [
@@ -55,6 +58,12 @@ export default defineConfig([
   },
 
   {
-    ignores: ["**/dist/", "**/build/", "**/node_modules/", "**/.svelte-kit/"],
+    ignores: [
+      "**/dist/",
+      "**/build/",
+      "**/node_modules/",
+      "**/.svelte-kit/",
+      "!.storybook",
+    ],
   },
 ]);

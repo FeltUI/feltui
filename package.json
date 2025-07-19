@@ -7,8 +7,10 @@
     "packages/*"
   ],
   "scripts": {
-    "lint": "prettier --check . && eslint .",
-    "lint:fix": "prettier --write . && eslint . --fix",
+    "lint": "bun prettier && eslint .",
+    "lint:fix": "bun prettier:fix && eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "sv": "cd packages/svelte && bun",
     "vue": "cd packages/vue && bun"
   }
