@@ -96,3 +96,10 @@ export function parseSizeProp(size: string | number | undefined) {
         style: sizeStyle,
     };
 }
+
+export function applyDefaults<T extends Record<string, unknown>>(
+    props: T,
+    defaults: Partial<T>
+): T {
+    return { ...defaults, ...props };
+}

@@ -40,7 +40,7 @@
     const hasPopup = new Context(buttonSymbols.hasPopup, false);
     // #endregion: --- Context
 
-    // #region:    --- $derived
+    // #region:    --- Derived
     const realVariant = $derived(
         getButtonVariant({
             variant,
@@ -59,6 +59,7 @@
             disabled,
             hasPopup: hasPopup.value,
             type,
+            ...props,
         })
     );
 
@@ -84,7 +85,7 @@
             classes: ["felt-icon-button"],
         })
     );
-    // #endregion: --- $derived
+    // #endregion: --- Derived
 </script>
 
 <!--
@@ -104,9 +105,9 @@ Of course, this component is fully accessible and supports all the features you 
         disabled: noRipple || disabled,
         color: rippleColor,
     })}
+    {...props}
     {...attributes}
     class={cls}
-    {...props}
     {...getActionableEventHandlers({ disabled, ...props })}
 >
     {#if typeof icon === "string"}

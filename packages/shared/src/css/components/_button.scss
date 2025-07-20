@@ -14,7 +14,7 @@
 
     cursor: pointer;
 
-    transition: border-radius 0.3s cubic-bezier(0.3, 0.3, 0.3, 1.15);
+    transition: 0.3s cubic-bezier(0.3, 0.3, 0.3, 1.15);
 
     &__icon {
         border-radius: 0;
@@ -200,4 +200,32 @@
         }
     }
     /* #endregion: --- Sizes */
+}
+
+.felt-toggle-button {
+    &:not([data-pressed]).felt-button--filled {
+        background-color: var(--surface-container);
+        --ripple-color: var(--on-surface-variant);
+    }
+
+    &[aria-pressed] {
+        /* #region:    --- Variant */
+        &.felt-button--elevated,
+        &.felt-button--unelevated,
+        &.felt-button--filled {
+            background-color: var(--primary);
+            --ripple-color: var(--on-primary);
+        }
+
+        &.felt-button--tonal {
+            background-color: var(--secondary);
+            --ripple-color: var(--on-secondary);
+        }
+
+        &.felt-button--outlined {
+            background-color: var(--inverse-surface);
+            --ripple-color: var(--inverse-on-surface);
+        }
+        /* #endregion: --- Variant */
+    }
 }

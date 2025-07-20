@@ -1,11 +1,11 @@
-import type { ClassValue, HTMLAttributes } from "svelte/elements";
+import type { ClassValue } from "svelte/elements";
 
 type FeltClassesParams = {
     bemClasses?: Record<string, boolean | string>;
     classes?: (string | undefined | null)[];
     subElement?: string;
     props?: Record<string | number | symbol, unknown> & {
-        class?: HTMLAttributes<HTMLElement>["class"];
+        class?: ClassValue | null | undefined;
     };
 };
 
@@ -34,5 +34,5 @@ export function createFeltClass(component: string, input: FeltClassesParams) {
         customClass
     );
 
-    return classList;
+    return classList.flat();
 }
