@@ -11,11 +11,6 @@ export interface ButtonBaseProps extends ClickableComponent {
 	 * Size of the button, which can affect its padding and font size.
 	 */
 	size?: SizeProp;
-
-	/**
-	 * Removes the button's elevation.
-	 */
-	unelevated?: boolean;
 }
 
 export interface ButtonWithShapeProps {
@@ -29,29 +24,46 @@ export interface ButtonWithVariantProps {
 	/**
 	 * The visual style of the button, which can affect its appearance and interaction.
 	 * If this prop is specified, it will overwrite all other variants defined with boolean props.
-	 * By default, the button will have an elevated style.
+	 * By default, the button will have a tonal style.
 	 */
-	variant?: "elevated" | "filled" | "tonal" | "outlined" | "text";
+	variant?:
+		| "elevated"
+		| "unelevated"
+		| "filled"
+		| "tonal"
+		| "outlined"
+		| "text";
 
 	/**
-	 * Equivalent to `variant="filled"`, overwritten by `variant` but overwrites `tonal`, `outlined`, and `text`.
+	 * Equivalent to `variant="elevated"`, overwritten by `variant` but overwrites `filled`, `outlined`, `text` and `tonal`.
+	 */
+	elevated?: boolean;
+
+	/**
+	 * Equivalent to `variant="unelevated"`, overwritten by `variant` and `elevated` but overwrites `filled`, `outlined`, `text` and `tonal`.
+	 */
+	unelevated?: boolean;
+
+	/**
+	 * Equivalent to `variant="filled"`, overwritten by `variant` and `elevated` but overwrites `outlined`, `text` and `tonal`.
 	 */
 	filled?: boolean;
 
 	/**
-	 * Equivalent to `variant="tonal"`, overwritten by `variant` and `filled` but overwrites `outlined`, and `text`.
-	 */
-	tonal?: boolean;
-
-	/**
-	 * Equivalent to `variant="outlined"`, overwritten by `variant`, `filled`, and `tonal` but overwrites `text`.
+	 * Equivalent to `variant="outlined"`, overwritten by `variant`, `elevated`, and `filled` but overwrites `text` and `tonal`.
 	 */
 	outlined?: boolean;
 
 	/**
-	 * Equivalent to `variant="text"`, overwritten by `variant`, `filled`, `tonal`, and `outlined`.
+	 * Equivalent to `variant="text"`, overwritten by `variant` and `filled` and `outlined` but overwrites `tonal`.
 	 */
 	text?: boolean;
+
+	/**
+	 * Equivalent to `variant="tonal"`, overwritten by `variant`, `elevated`, `filled`, `tonal` and `outlined`.
+	 *
+	 */
+	tonal?: boolean;
 }
 
 export interface ButtonWithIconProps<Framework extends "svelte" | "vue"> {

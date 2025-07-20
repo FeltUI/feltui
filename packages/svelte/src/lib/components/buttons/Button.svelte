@@ -15,13 +15,14 @@
 		href,
 		label,
 		size = "md",
-		variant = "elevated",
+		variant = "tonal",
 		icon,
 		rippleColor,
 		target,
 		text = false,
 		to,
 		tonal = false,
+		elevated = false,
 		unelevated = false,
 		outlined = false,
 		shape = "rounded",
@@ -39,13 +40,13 @@
 
 	// #region:    --- $derived
 	const realVariant = $derived.by(() => {
-		if (variant !== "elevated") {
+		if (variant !== "tonal") {
 			return variant;
 		}
 
 		switch (true) {
-			case tonal:
-				return "tonal";
+			case elevated:
+				return "elevated";
 			case unelevated:
 				return "unelevated";
 			case outlined:
@@ -54,8 +55,9 @@
 				return "text";
 			case filled:
 				return "filled";
+			case tonal:
 			default:
-				return "elevated";
+				return "tonal";
 		}
 	});
 
@@ -97,7 +99,7 @@
 Buttons prompt most actions in a UI.
 You can import this component as `Button` or `Buttons.Standard`.
 
-This component comes with 5 variants, each different styles and purposes. It also comes with 5 sizes (from `xs` to `xl`) and 2 shapes (`rounded` and `squared`).
+This component comes with 6 variants, each having different styles and purposes. It also comes with 5 sizes (from `xs` to `xl`) and 2 shapes (`rounded` and `squared`).
 
 Of course, this component is fully accessible and supports all the features you would expect from a button, such as `disabled`, `icon`, `ripple`.
 
@@ -112,10 +114,18 @@ Of course, this component is fully accessible and supports all the features you 
 	{...props}
 	{...getActionableEventHandlers({ disabled, ...props })}
 >
-	{#if icon && typeof icon === "string"}
-		<Icon name={icon} size={iconSize} />
-	{:else}
-		{@render icon?.()}
+	{#if icon}
+		{#if icon && typeof icon === "string"}
+			<Icon name={icon} size={iconSize} />
+		{:else}
+			<span
+				class="felt-button__icon"
+				style:width={iconSize}
+				style:height={iconSize}
+			>
+				{@render icon?.()}
+			</span>
+		{/if}
 	{/if}
 
 	<span class="felt-button__label">

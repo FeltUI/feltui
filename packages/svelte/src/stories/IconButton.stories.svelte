@@ -1,13 +1,13 @@
 <script module>
     import { defineMeta } from "@storybook/addon-svelte-csf";
-    import { Button } from "$lib";
+    import { Buttons } from "$lib";
 
     import "@feltui/shared/css";
 
     // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
     const { Story } = defineMeta({
-        title: "Components/Buttons/Standard Button",
-        component: Button,
+        title: "Components/Buttons/Icon Button",
+        component: Buttons.Icon,
         argTypes: {
             icon: {
                 table: {
@@ -16,7 +16,7 @@
             },
         },
         args: {
-            label: "Button",
+            icon: "edit",
         },
     });
 </script>
@@ -29,10 +29,10 @@
 -->
 <Story name="Tonal">
     {#snippet template(args)}
-        <Button {...args} />
-        <Button {...args} shape="squared" />
-        <Button {...args} icon="star" />
-        <Button {...args} disabled icon="star" />
+        <Buttons.Icon {...args} />
+        <Buttons.Icon {...args} shape="squared" />
+        <Buttons.Icon {...args} />
+        <Buttons.Icon {...args} disabled />
     {/snippet}
 </Story>
 
@@ -44,10 +44,10 @@
 -->
 <Story name="Elevated">
     {#snippet template(args)}
-        <Button {...args} variant="elevated" />
-        <Button {...args} variant="elevated" shape="squared" />
-        <Button {...args} variant="elevated" icon="star" />
-        <Button {...args} variant="elevated" disabled icon="star" />
+        <Buttons.Icon {...args} variant="elevated" />
+        <Buttons.Icon {...args} variant="elevated" shape="squared" />
+        <Buttons.Icon {...args} variant="elevated" />
+        <Buttons.Icon {...args} variant="elevated" disabled />
     {/snippet}
 </Story>
 
@@ -57,10 +57,10 @@
 -->
 <Story name="Unelevated">
     {#snippet template(args)}
-        <Button {...args} unelevated />
-        <Button {...args} unelevated shape="squared" />
-        <Button {...args} unelevated icon="star" />
-        <Button {...args} unelevated disabled icon="star" />
+        <Buttons.Icon {...args} unelevated />
+        <Buttons.Icon {...args} unelevated shape="squared" />
+        <Buttons.Icon {...args} unelevated />
+        <Buttons.Icon {...args} unelevated disabled />
     {/snippet}
 </Story>
 
@@ -72,10 +72,10 @@
 -->
 <Story name="Filled">
     {#snippet template(args)}
-        <Button {...args} variant="filled" />
-        <Button {...args} variant="filled" shape="squared" />
-        <Button {...args} variant="filled" icon="star" />
-        <Button {...args} variant="filled" disabled icon="star" />
+        <Buttons.Icon {...args} variant="filled" />
+        <Buttons.Icon {...args} variant="filled" shape="squared" />
+        <Buttons.Icon {...args} variant="filled" />
+        <Buttons.Icon {...args} variant="filled" disabled />
     {/snippet}
 </Story>
 
@@ -92,10 +92,10 @@
 -->
 <Story name="Outlined">
     {#snippet template(args)}
-        <Button {...args} variant="outlined" />
-        <Button {...args} variant="outlined" shape="squared" />
-        <Button {...args} variant="outlined" icon="star" />
-        <Button {...args} variant="outlined" disabled icon="star" />
+        <Buttons.Icon {...args} variant="outlined" />
+        <Buttons.Icon {...args} variant="outlined" shape="squared" />
+        <Buttons.Icon {...args} variant="outlined" />
+        <Buttons.Icon {...args} variant="outlined" disabled />
     {/snippet}
 </Story>
 
@@ -110,10 +110,10 @@
 -->
 <Story name="Text">
     {#snippet template(args)}
-        <Button {...args} variant="text" />
-        <Button {...args} variant="text" shape="squared" />
-        <Button {...args} variant="text" icon="star" />
-        <Button {...args} variant="text" disabled icon="star" />
+        <Buttons.Icon {...args} variant="text" />
+        <Buttons.Icon {...args} variant="text" shape="squared" />
+        <Buttons.Icon {...args} variant="text" />
+        <Buttons.Icon {...args} variant="text" disabled />
     {/snippet}
 </Story>
 
@@ -124,11 +124,24 @@
 -->
 <Story name="Sizes">
     {#snippet template(args)}
-        <Button {...args} size="xs" />
-        <Button {...args} size="sm" />
-        <Button {...args} size="md" />
-        <Button {...args} size="lg" />
-        <Button {...args} size="xl" />
+        <Buttons.Icon {...args} size="xs" />
+        <Buttons.Icon {...args} size="sm" />
+        <Buttons.Icon {...args} size="md" />
+        <Buttons.Icon {...args} size="lg" />
+        <Buttons.Icon {...args} size="xl" />
+    {/snippet}
+</Story>
+
+<!--
+    Icon buttons come with 3 widths, which can be set using the `width` prop.
+
+    You can use width to further emphasize the visual hierarchy in UI with multiple buttons.
+-->
+<Story name="Widths">
+    {#snippet template(args)}
+        <Buttons.Icon {...args} width="narrow" />
+        <Buttons.Icon {...args} width="default" />
+        <Buttons.Icon {...args} width="wide" />
     {/snippet}
 </Story>
 
@@ -144,34 +157,40 @@
     </script>
 
     {#snippet template(args)}
-        <Button {...args} icon="star" />
-        <Button label="Edit" icon="edit" />
-        <Button label="Custom icon" variant="outlined">
+        <Buttons.Icon {...args} />
+        <Buttons.Icon icon="star" />
+        <Buttons.Icon label="Custom icon" variant="outlined">
             {#snippet icon()}
                 <svg
+                    version="1.0"
+                    id="Layer_1"
                     xmlns="http://www.w3.org/2000/svg"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 48 48"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 64 64"
+                    enable-background="new 0 0 64 64"
+                    xml:space="preserve"
+                    fill="#000000"
                 >
-                    <path
-                        fill="#FFC107"
-                        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                    <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                     />
-                    <path
-                        fill="#FF3D00"
-                        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
-                    />
-                    <path
-                        fill="#4CAF50"
-                        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
-                    />
-                    <path
-                        fill="#1976D2"
-                        d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
-                    />
+                    <g id="SVGRepo_iconCarrier">
+                        <g>
+                            <path
+                                fill="#394240"
+                                d="M48,5c-4.418,0-8.418,1.793-11.312,4.688L32,14.344l-4.688-4.656C24.418,6.793,20.418,5,16,5 C7.164,5,0,12.164,0,21c0,4.418,2.852,8.543,5.75,11.438l23.422,23.426c1.562,1.562,4.094,1.562,5.656,0L58.188,32.5 C61.086,29.605,64,25.418,64,21C64,12.164,56.836,5,48,5z M32,47.375L11.375,26.75C9.926,25.305,8,23.211,8,21c0-4.418,3.582-8,8-8 c2.211,0,4.211,0.895,5.656,2.344l7.516,7.484c1.562,1.562,4.094,1.562,5.656,0l7.516-7.484C43.789,13.895,45.789,13,48,13 c4.418,0,8,3.582,8,8c0,2.211-1.926,4.305-3.375,5.75L32,47.375z"
+                            />
+                            <path
+                                fill="#F76D57"
+                                d="M32,47.375L11.375,26.75C9.926,25.305,8,23.211,8,21c0-4.418,3.582-8,8-8c2.211,0,4.211,0.895,5.656,2.344 l7.516,7.484c1.562,1.562,4.094,1.562,5.656,0l7.516-7.484C43.789,13.895,45.789,13,48,13c4.418,0,8,3.582,8,8 c0,2.211-1.926,4.305-3.375,5.75L32,47.375z"
+                            />
+                        </g>
+                    </g>
                 </svg>
             {/snippet}
-        </Button>
+        </Buttons.Icon>
     {/snippet}
 </Story>

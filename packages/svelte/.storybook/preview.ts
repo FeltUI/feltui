@@ -1,8 +1,20 @@
 import type { Preview } from "@storybook/sveltekit";
 
 const preview: Preview = {
+	tags: ["autodocs"],
 	parameters: {
 		layout: "centered",
+
+		docs: {
+			toc: {
+				contentsSelector: ".sbdocs-content",
+				headingSelector: "h3",
+				title: "Table of Contents",
+				unsafeTocbotOptions: {
+					hasInnerContainers: true,
+				},
+			},
+		},
 
 		controls: {
 			matchers: {
