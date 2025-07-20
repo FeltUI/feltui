@@ -52,13 +52,8 @@
 <!--
 @component
 
-Toggle buttons allow users to select between two states, such as on/off or active/inactive.
-You can import this component as `ToggleButton` or `Buttons.Toggle`.
-
-Unlike the standard button component, it comes with "only" 5 variants, the `text` one being omitted. It also comes with 5 sizes (from `xs` to `xl`) and 2 shapes (`rounded` and `squared`).
-It also has a `toggled` prop, which indicates whether the button is toggled on or off. When toggled, the button will switch shape to indicate a change of state.
-
-Of course, this component is fully accessible and supports all the features you would expect from a button, such as `disabled`, `icon`, `ripple`.
+Toggle icon buttons are a mix of toggle buttons and icon buttons, allowing users to select between two states on an icon-based button.
+You can import this component as `ToggleIconButton` or `Buttons.ToggleIcon`.
 
 -->
 <IconButton
