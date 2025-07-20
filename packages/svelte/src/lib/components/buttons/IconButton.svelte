@@ -1,4 +1,4 @@
-<script lang="ts" generics="Link extends Href = undefined">
+<script lang="ts">
     import {
         getButtonAttributes,
         getButtonVariant,
@@ -9,7 +9,6 @@
         buttonSymbols,
         createFeltClass,
         getActionableEventHandlers,
-        type Href,
     } from "@feltui/shared";
 
     // #region:    --- Props
@@ -34,7 +33,7 @@
         type,
         children,
         ...props
-    }: ButtonIconProps<Link> = $props();
+    }: ButtonIconProps = $props();
     // #endregion: --- Props
 
     // #region:    --- Context

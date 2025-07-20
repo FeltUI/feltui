@@ -1,6 +1,5 @@
 import type {
     ClickableComponent,
-    Href,
     IconProp,
     LinkComponent,
     SizeProp,
@@ -98,10 +97,8 @@ export interface ButtonWithValueProps {
 /**
  * Standard button properties that include basic button functionality and appearance.
  */
-export interface ButtonStandardProps<
-    Framework extends "svelte" | "vue",
-    Link extends Href = undefined,
-> extends LinkComponent<Framework, Link>,
+export interface ButtonStandardProps<Framework extends "svelte" | "vue">
+    extends LinkComponent<Framework>,
         ButtonBaseProps,
         ButtonWithShapeProps,
         ButtonWithVariantProps,
@@ -117,10 +114,8 @@ export interface ButtonStandardProps<
 /**
  * Properties for an icon button, which is a button that primarily displays an icon.
  */
-export interface ButtonIconProps<
-    Framework extends "svelte" | "vue",
-    Link extends Href = undefined,
-> extends LinkComponent<Framework, Link>,
+export interface ButtonIconProps<Framework extends "svelte" | "vue">
+    extends LinkComponent<Framework>,
         ButtonBaseProps,
         ButtonWithShapeProps,
         ButtonWithVariantProps {
@@ -141,10 +136,8 @@ export interface ButtonIconProps<
 /**
  * Properties for a toggle button, which can be used in button groups or as standalone toggle button.
  */
-export interface ButtonToggleProps<
-    Framework extends "svelte" | "vue",
-    Link extends Href = undefined,
-> extends ButtonStandardProps<Framework, Link>,
+export interface ButtonToggleProps<Framework extends "svelte" | "vue">
+    extends ButtonStandardProps<Framework>,
         ButtonWithValueProps {}
 // #endregion: --- Standard Toggle Button Props
 
@@ -152,10 +145,8 @@ export interface ButtonToggleProps<
 /**
  * Properties for a toggle icon button, which can be used in button groups or as standalone toggle button.
  */
-export interface ButtonToggleIconProps<
-    Framework extends "svelte" | "vue",
-    Link extends Href = undefined,
-> extends ButtonIconProps<Framework, Link>,
+export interface ButtonToggleIconProps<Framework extends "svelte" | "vue">
+    extends ButtonIconProps<Framework>,
         ButtonWithValueProps {}
 // #endregion: --- Icon Toggle Button Props
 

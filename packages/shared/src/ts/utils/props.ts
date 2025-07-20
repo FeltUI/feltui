@@ -1,5 +1,6 @@
+import type { HTMLAnchorAttributes } from "svelte/elements";
 import { isNumeric } from "./number";
-import type { CssUnit, Href, NullableSizeProp } from "./types";
+import type { CssUnit, NullableSizeProp } from "./types";
 
 export interface DisableableComponent {
     /**
@@ -32,25 +33,22 @@ export interface FocusableComponent extends DisableableComponent {
     tabindex?: number;
 }
 
-export interface LinkComponent<
-    Framework extends "svelte" | "vue",
-    Link extends Href | undefined = undefined,
-> {
+export interface LinkComponent<Framework extends "svelte" | "vue"> {
     /**
      * Makes the component navigational, typically used for links to set the URL it should navigate to.
      */
-    href?: Link;
+    href?: HTMLAnchorAttributes["href"];
 
     /**
      * For Vue, specifies the target route to navigate to. Uses the router's link system instead of standard HTML links.
      * This is useful for single-page applications where you want to navigate without reloading the page
      */
-    to?: Framework extends "vue" ? Link : never;
+    to?: Framework extends "vue" ? HTMLAnchorAttributes["href"] : never;
 
     /**
      * For navigational components only, sets or retrieves the window or frame at which to target content.
      */
-    target?: Link extends undefined ? undefined : HTMLAnchorElement["target"];
+    target?: HTMLAnchorAttributes["target"];
 }
 
 export function parseColorProp(color: string | undefined) {

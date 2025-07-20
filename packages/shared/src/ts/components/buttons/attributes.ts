@@ -1,8 +1,10 @@
-import type { HTMLButtonAttributes } from "svelte/elements";
-import type { Href } from "@feltui/shared";
+import type {
+    HTMLButtonAttributes,
+    HTMLAnchorAttributes,
+} from "svelte/elements";
 
 type Params = {
-    href?: Href;
+    href?: HTMLAnchorAttributes["href"];
     disabled?: boolean;
     toggled?: boolean;
     expanded?: boolean;
