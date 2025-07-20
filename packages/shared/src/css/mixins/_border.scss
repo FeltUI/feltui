@@ -1,19 +1,19 @@
 @use "../variables";
 
 @mixin border($color: var(--outline), $position: variables.$border-positions) {
-	@if list.index($list: $position, $value: top) {
-		border-top: 0.0625rem solid $color;
-	}
+    @if list.index($list: $position, $value: top) {
+        border-top: 0.0625rem solid $color;
+    }
 
-	@if list.index($list: $position, $value: right) {
-		border-right: 0.0625rem solid $color;
-	}
+    @if list.index($list: $position, $value: right) {
+        border-right: 0.0625rem solid $color;
+    }
 
-	@if list.index($list: $position, $value: bottom) {
-		border-bottom: 0.0625rem solid $color;
-	}
+    @if list.index($list: $position, $value: bottom) {
+        border-bottom: 0.0625rem solid $color;
+    }
 
-	@if list.index($list: $position, $value: left) {
-		border-left: 0.0625rem solid $color;
-	}
+    @if list.index($list: $position, $value: left) {
+        border-left: 0.0625rem solid $color;
+    }
 }

@@ -1,24 +1,24 @@
 @use "./color";
 
 @mixin disabled() {
-	@layer disabled {
-		&:is([aria-disabled], [disabled]) {
-			cursor: not-allowed;
-			box-shadow: none;
-			user-select: none;
-			color: disabled-font-color();
-			background-color: transparent;
-			transition: none;
+    @layer disabled {
+        &:is([aria-disabled], [disabled]) {
+            cursor: not-allowed;
+            box-shadow: none;
+            user-select: none;
+            color: disabled-font-color();
+            background-color: transparent;
+            transition: none;
 
-			@content;
-		}
-	}
+            @content;
+        }
+    }
 }
 
 @function disabled-font-color($color: on-surface) {
-	@return color.with-alpha(var(--#{$color}), 38%);
+    @return color.with-alpha(var(--#{$color}), 38%);
 }
 
 @function disabled-rest-color($color: on-surface) {
-	@return color.with-alpha(var(--#{$color}), 12%);
+    @return color.with-alpha(var(--#{$color}), 12%);
 }

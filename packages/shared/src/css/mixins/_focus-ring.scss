@@ -1,10 +1,10 @@
 @mixin focus-ring(
-	$thickness: 0.1875rem,
-	$color: var(--secondary),
-	$offset: 0.125rem
+    $thickness: 0.1875rem,
+    $color: var(--secondary),
+    $offset: 0.125rem
 ) {
-	&:focus-visible {
-		outline: $thickness solid $color;
-		outline-offset: $offset;
-	}
+    &:focus-visible {
+        outline: $thickness solid $color;
+        outline-offset: $offset;
+    }
 }

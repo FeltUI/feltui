@@ -4,38 +4,38 @@
 @layer theme, ripple, components, classes, disabled;
 
 @layer FeltUI {
-	@layer theme {
-		@include meta.load-css("theme");
-	}
+    @layer theme {
+        @include meta.load-css("theme");
+    }
 
-	@layer ripple {
-		@include meta.load-css("ripple");
-	}
+    @layer ripple {
+        @include meta.load-css("ripple");
+    }
 
-	@layer components {
-		@include meta.load-css("components");
-	}
+    @layer components {
+        @include meta.load-css("components");
+    }
 
-	@layer classes {
-		// @include meta.load-css("classes");
-	}
+    @layer classes {
+        // @include meta.load-css("classes");
+    }
 
-	@layer disabled {
-		@include meta.load-css("disabled-components");
-	}
+    @layer disabled {
+        @include meta.load-css("disabled-components");
+    }
 }
 
 @mixin font-face-declaration($font-name) {
-	$file-name: string.to-lower-case($font-name);
+    $file-name: string.to-lower-case($font-name);
 
-	@font-face {
-		font-family: "Material Symbols #{$font-name}";
-		src: url("material-symbols/material-symbols-#{$file-name}.woff2")
-			format("woff2");
-		font-style: normal;
-		font-weight: 100 700;
-		font-display: block;
-	}
+    @font-face {
+        font-family: "Material Symbols #{$font-name}";
+        src: url("material-symbols/material-symbols-#{$file-name}.woff2")
+            format("woff2");
+        font-style: normal;
+        font-weight: 100 700;
+        font-display: block;
+    }
 }
 
 @include font-face-declaration("Outlined");

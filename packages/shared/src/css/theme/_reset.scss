@@ -1,45 +1,45 @@
 @use "@fontsource/roboto";
 
 * {
-	-webkit-tap-highlight-color: transparent;
-	position: relative;
-	vertical-align: middle;
-	color: inherit;
-	margin: 0;
-	padding: 0;
-	border-radius: inherit;
-	box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    vertical-align: middle;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border-radius: inherit;
+    box-sizing: border-box;
 }
 
 html,
 body {
-	min-height: 100%;
-	width: 100%;
-	color: var(--on-surface);
-	background-color: var(--surface-container-lowest);
-	font-family: "Roboto", sans-serif;
+    min-height: 100%;
+    width: 100%;
+    color: var(--on-surface);
+    background-color: var(--surface-container-lowest);
+    font-family: "Roboto", sans-serif;
 }
 
 label {
-	font-size: 0.75rem;
-	vertical-align: baseline;
+    font-size: 0.75rem;
+    vertical-align: baseline;
 }
 
 a,
 b,
 i,
 span {
-	vertical-align: bottom;
+    vertical-align: bottom;
 }
 
 a,
 button {
-	cursor: pointer;
-	text-decoration: none;
-	display: inline-flex;
-	align-items: center;
-	border: none;
-	font-family: inherit;
-	outline: inherit;
-	justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    font-family: inherit;
+    outline: inherit;
+    justify-content: center;
 }

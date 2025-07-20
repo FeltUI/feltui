@@ -1,5 +1,5 @@
 @mixin enabled() {
-	&:not([aria-disabled], [disabled]) {
-		@content;
-	}
+    &:not([aria-disabled], [disabled]) {
+        @content;
+    }
 }

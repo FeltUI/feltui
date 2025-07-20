@@ -2,12 +2,12 @@
 @use "./color";
 
 @mixin elevate($strength, $position: null) {
-	$coeff: 1;
-	@if $position == "top" {
-		$coeff: -1;
-	}
-	$elevate: 0.125rem * $strength;
+    $coeff: 1;
+    @if $position == "top" {
+        $coeff: -1;
+    }
+    $elevate: 0.125rem * $strength;
 
-	box-shadow: 0 $elevate * $coeff $elevate 0
-		color.with-alpha(var(--shadow), calc(24% + (8% * $strength)));
+    box-shadow: 0 $elevate * $coeff $elevate 0
+        color.with-alpha(var(--shadow), calc(24% + (8% * $strength)));
 }

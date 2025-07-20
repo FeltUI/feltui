@@ -1,23 +1,23 @@
 @mixin transparent($ripple: false) {
-	background-color: transparent;
-	background: transparent;
-	color: inherit;
+    background-color: transparent;
+    background: transparent;
+    color: inherit;
 
-	&:is(:focus, :hover) > .felt-icon {
-		font-variation-settings: "FILL" 1;
-	}
+    &:is(:focus, :hover) > .felt-icon {
+        font-variation-settings: "FILL" 1;
+    }
 
-	@if $ripple {
-		&::after {
-			background-image: radial-gradient(
-				circle,
-				rgb(150, 150, 150, 0.2) 1%,
-				transparent 1%
-			);
-		}
-	}
+    @if $ripple {
+        &::after {
+            background-image: radial-gradient(
+                circle,
+                rgb(150, 150, 150, 0.2) 1%,
+                transparent 1%
+            );
+        }
+    }
 }
 
 @function with-alpha($color-variable: null, $percentage: null) {
-	@return color-mix(in srgb, $color-variable $percentage, transparent);
+    @return color-mix(in srgb, $color-variable $percentage, transparent);
 }

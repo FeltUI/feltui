@@ -1,13 +1,13 @@
 @use "../mixins";
 
 .felt-button {
-	@include mixins.disabled {
-		&:not(.felt-button--outlined, .felt-button--text) {
-			background-color: mixins.disabled-rest-color();
-		}
+    @include mixins.disabled {
+        &:not(.felt-button--outlined, .felt-button--text) {
+            background-color: mixins.disabled-rest-color();
+        }
 
-		&.felt-button--outlined {
-			border-color: mixins.disabled-rest-color();
-		}
-	}
+        &.felt-button--outlined {
+            border-color: mixins.disabled-rest-color();
+        }
+    }
 }

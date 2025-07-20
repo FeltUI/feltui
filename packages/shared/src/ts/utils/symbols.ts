@@ -1,3 +1,3 @@
 export const buttonSymbols = {
-	hasPopup: Symbol("button-hasPopup"),
+    hasPopup: Symbol("button-hasPopup"),
 };
