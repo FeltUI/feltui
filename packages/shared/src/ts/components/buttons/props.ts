@@ -153,7 +153,15 @@ export type ButtonToggleProps<Framework extends "svelte" | "vue"> =
  * Properties for a toggle icon button, which can be used in button groups or as standalone toggle button.
  */
 export type ButtonToggleIconProps<Framework extends "svelte" | "vue"> =
-    ButtonIconProps<Framework> & ButtonWithValueProps;
+    ButtonIconProps<Framework> &
+        ButtonWithValueProps & {
+            /**
+             * The visual style of the button, which can affect its appearance and interaction.
+             * If this prop is specified, it will overwrite all other variants defined with boolean props.
+             * By default, the button will have a tonal style.
+             */
+            variant?: Exclude<ButtonWithVariantProps["variant"], "text">;
+        };
 // #endregion: --- Icon Toggle Button Props
 
 // #region:    --- FAB Button Props

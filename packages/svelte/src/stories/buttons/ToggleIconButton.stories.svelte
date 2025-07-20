@@ -6,8 +6,8 @@
 
     // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
     const { Story } = defineMeta({
-        title: "Components/Buttons/Toggle Button",
-        component: Buttons.Toggle,
+        title: "Components/Buttons/Toggle Icon Button",
+        component: Buttons.ToggleIcon,
         argTypes: {
             icon: {
                 table: {
@@ -16,7 +16,7 @@
             },
         },
         args: {
-            label: "Button",
+            icon: "edit",
         },
     });
 </script>
@@ -30,16 +30,14 @@
 <Story name="Tonal">
     {#snippet template(args)}
         <div>
-            <Buttons.Toggle {...args} />
-            <Buttons.Toggle {...args} shape="squared" />
-            <Buttons.Toggle {...args} icon="star" />
-            <Buttons.Toggle {...args} disabled icon="star" />
+            <Buttons.ToggleIcon {...args} />
+            <Buttons.ToggleIcon {...args} shape="squared" />
+            <Buttons.ToggleIcon {...args} disabled />
         </div>
         <div>
-            <Buttons.Toggle toggled={true} {...args} />
-            <Buttons.Toggle toggled={true} {...args} shape="squared" />
-            <Buttons.Toggle toggled={true} {...args} icon="star" />
-            <Buttons.Toggle toggled={true} {...args} disabled icon="star" />
+            <Buttons.ToggleIcon toggled={true} {...args} />
+            <Buttons.ToggleIcon toggled={true} {...args} shape="squared" />
+            <Buttons.ToggleIcon toggled={true} {...args} disabled />
         </div>
     {/snippet}
 </Story>
@@ -52,10 +50,9 @@
 -->
 <Story name="Elevated">
     {#snippet template(args)}
-        <Buttons.Toggle {...args} variant="elevated" />
-        <Buttons.Toggle {...args} variant="elevated" shape="squared" />
-        <Buttons.Toggle {...args} variant="elevated" icon="star" />
-        <Buttons.Toggle {...args} variant="elevated" disabled icon="star" />
+        <Buttons.ToggleIcon {...args} variant="elevated" />
+        <Buttons.ToggleIcon {...args} variant="elevated" shape="squared" />
+        <Buttons.ToggleIcon {...args} variant="elevated" disabled />
     {/snippet}
 </Story>
 
@@ -65,10 +62,9 @@
 -->
 <Story name="Unelevated">
     {#snippet template(args)}
-        <Buttons.Toggle {...args} unelevated />
-        <Buttons.Toggle {...args} unelevated shape="squared" />
-        <Buttons.Toggle {...args} unelevated icon="star" />
-        <Buttons.Toggle {...args} unelevated disabled icon="star" />
+        <Buttons.ToggleIcon {...args} unelevated />
+        <Buttons.ToggleIcon {...args} unelevated shape="squared" />
+        <Buttons.ToggleIcon {...args} unelevated disabled />
     {/snippet}
 </Story>
 
@@ -80,10 +76,9 @@
 -->
 <Story name="Filled">
     {#snippet template(args)}
-        <Buttons.Toggle {...args} variant="filled" />
-        <Buttons.Toggle {...args} variant="filled" shape="squared" />
-        <Buttons.Toggle {...args} variant="filled" icon="star" />
-        <Buttons.Toggle {...args} variant="filled" disabled icon="star" />
+        <Buttons.ToggleIcon {...args} variant="filled" />
+        <Buttons.ToggleIcon {...args} variant="filled" shape="squared" />
+        <Buttons.ToggleIcon {...args} variant="filled" disabled />
     {/snippet}
 </Story>
 
@@ -100,10 +95,9 @@
 -->
 <Story name="Outlined">
     {#snippet template(args)}
-        <Buttons.Toggle {...args} variant="outlined" />
-        <Buttons.Toggle {...args} variant="outlined" shape="squared" />
-        <Buttons.Toggle {...args} variant="outlined" icon="star" />
-        <Buttons.Toggle {...args} variant="outlined" disabled icon="star" />
+        <Buttons.ToggleIcon {...args} variant="outlined" />
+        <Buttons.ToggleIcon {...args} variant="outlined" shape="squared" />
+        <Buttons.ToggleIcon {...args} variant="outlined" disabled />
     {/snippet}
 </Story>
 
@@ -114,11 +108,11 @@
 -->
 <Story name="Sizes">
     {#snippet template(args)}
-        <Buttons.Toggle {...args} size="xs" />
-        <Buttons.Toggle {...args} size="sm" />
-        <Buttons.Toggle {...args} size="md" />
-        <Buttons.Toggle {...args} size="lg" />
-        <Buttons.Toggle {...args} size="xl" />
+        <Buttons.ToggleIcon {...args} size="xs" />
+        <Buttons.ToggleIcon {...args} size="sm" />
+        <Buttons.ToggleIcon {...args} size="md" />
+        <Buttons.ToggleIcon {...args} size="lg" />
+        <Buttons.ToggleIcon {...args} size="xl" />
     {/snippet}
 </Story>
 
@@ -134,9 +128,9 @@
     </script>
 
     {#snippet template(args)}
-        <Buttons.Toggle {...args} icon="star" />
-        <Buttons.Toggle label="Edit" icon="edit" />
-        <Buttons.Toggle label="Custom icon" variant="outlined">
+        <Buttons.ToggleIcon {...args} />
+        <Buttons.ToggleIcon label="Edit" icon="edit" />
+        <Buttons.ToggleIcon label="Custom icon" variant="outlined">
             {#snippet icon()}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -162,6 +156,6 @@
                     />
                 </svg>
             {/snippet}
-        </Buttons.Toggle>
+        </Buttons.ToggleIcon>
     {/snippet}
 </Story>

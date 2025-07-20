@@ -1,8 +1,9 @@
 import Button from "./Button.svelte";
 import IconButton from "./IconButton.svelte";
 import ToggleButton from "./ToggleButton.svelte";
+import ToggleIconButton from "./ToggleIconButton.svelte";
 
-export { Button, IconButton, ToggleButton };
+export { Button, IconButton, ToggleButton, ToggleIconButton };
 
 /**
  * Buttons prompt most actions in a UI. There are a wide variety of buttons, each with different purposes.
@@ -42,4 +43,10 @@ export const Buttons = {
      * Of course, this component is fully accessible and supports all the features you would expect from a button, such as `disabled`, `icon`, `ripple`.
      */
     Toggle: ToggleButton,
+
+    /**
+     * Toggle icon buttons are a mix of toggle buttons and icon buttons, allowing users to select between two states on an icon-based button.
+     * You can import this component as `ToggleIconButton` or `Buttons.ToggleIcon`.
+     */
+    ToggleIcon: ToggleIconButton,
 };

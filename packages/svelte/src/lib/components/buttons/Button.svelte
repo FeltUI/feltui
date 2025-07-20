@@ -42,15 +42,19 @@
 
     // #region:    --- Derived
     const realVariant = $derived(
-        getButtonVariant({
-            variant,
-            tonal,
-            elevated,
-            unelevated,
-            outlined,
-            filled,
-            text,
-        })
+        getButtonVariant(
+            {
+                variant,
+                tonal,
+                elevated,
+                unelevated,
+                outlined,
+                filled,
+                text,
+            },
+            // If it's a toggle button, we don't want to use the text variant
+            props.class?.includes("felt-toggle-button")
+        )
     );
 
     const attributes = $derived(
