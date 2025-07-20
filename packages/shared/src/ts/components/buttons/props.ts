@@ -6,20 +6,25 @@ import type {
     SizeProp,
 } from "@feltui/shared";
 
+// #region:    --- Button Base Props
 export interface ButtonBaseProps extends ClickableComponent {
     /**
      * Size of the button, which can affect its padding and font size.
      */
     size?: SizeProp;
 }
+// #endregion: --- Button Base Props
 
+// #region:    --- Button With Shape Props
 export interface ButtonWithShapeProps {
     /**
      * Shape of the button, whether it is squared or rounded.
      */
     shape?: "squared" | "rounded";
 }
+// #endregion: --- Button With Shape Props
 
+// #region:    --- Button With Variant Props
 export interface ButtonWithVariantProps {
     /**
      * The visual style of the button, which can affect its appearance and interaction.
@@ -65,7 +70,9 @@ export interface ButtonWithVariantProps {
      */
     tonal?: boolean;
 }
+// #endregion: --- Button With Variant Props
 
+// #region:    --- Button With Icon Props
 export interface ButtonWithIconProps<Framework extends "svelte" | "vue"> {
     /**
      * Icon to be displayed in the button.
@@ -73,7 +80,9 @@ export interface ButtonWithIconProps<Framework extends "svelte" | "vue"> {
      */
     icon?: IconProp<Framework>;
 }
+// #endregion: --- Button With Icon Props
 
+// #region:    --- Button With Value Props
 export interface ButtonWithValueProps {
     /**
      * For a toggle button, indicates whether the button is toggled on or off.
@@ -81,7 +90,30 @@ export interface ButtonWithValueProps {
      */
     value?: boolean;
 }
+// #endregion: --- Button With Value Props
 
+// ---- Button types props ----
+
+// #region:    --- Standard Button Props
+/**
+ * Standard button properties that include basic button functionality and appearance.
+ */
+export interface ButtonStandardProps<
+    Framework extends "svelte" | "vue",
+    Link extends Href = undefined,
+> extends LinkComponent<Framework, Link>,
+        ButtonBaseProps,
+        ButtonWithShapeProps,
+        ButtonWithVariantProps,
+        ButtonWithIconProps<Framework> {
+    /**
+     * Label for the button, which is displayed as text.
+     */
+    label: string;
+}
+// #endregion: --- Standard Button Props
+
+// #region:    --- Icon Button Props
 /**
  * Properties for an icon button, which is a button that primarily displays an icon.
  */
@@ -103,24 +135,9 @@ export interface ButtonIconProps<
      */
     width?: "narrow" | "default" | "wide";
 }
+// #endregion: --- Icon Button Props
 
-/**
- * Standard button properties that include basic button functionality and appearance.
- */
-export interface ButtonStandardProps<
-    Framework extends "svelte" | "vue",
-    Link extends Href = undefined,
-> extends LinkComponent<Framework, Link>,
-        ButtonBaseProps,
-        ButtonWithShapeProps,
-        ButtonWithVariantProps,
-        ButtonWithIconProps<Framework> {
-    /**
-     * Label for the button, which is displayed as text.
-     */
-    label: string;
-}
-
+// #region:    --- Standard Toggle Button Props
 /**
  * Properties for a toggle button, which can be used in button groups or as standalone toggle button.
  */
@@ -129,7 +146,9 @@ export interface ButtonToggleProps<
     Link extends Href = undefined,
 > extends ButtonStandardProps<Framework, Link>,
         ButtonWithValueProps {}
+// #endregion: --- Standard Toggle Button Props
 
+// #region:    --- Icon Toggle Button Props
 /**
  * Properties for a toggle icon button, which can be used in button groups or as standalone toggle button.
  */
@@ -138,7 +157,9 @@ export interface ButtonToggleIconProps<
     Link extends Href = undefined,
 > extends ButtonIconProps<Framework, Link>,
         ButtonWithValueProps {}
+// #endregion: --- Icon Toggle Button Props
 
+// #region:    --- FAB Button Props
 /**
  * Properties for a floating action button (FAB), which is typically used for primary actions.
  */
@@ -150,7 +171,9 @@ export interface ButtonFabProps<Framework extends "svelte" | "vue">
      */
     size?: Extract<SizeProp, "sm" | "md" | "lg">;
 }
+// #endregion: --- FAB Button Props
 
+// #region:    --- Extended FAB Button Props
 /**
  * Properties for an extended FAB, which is a larger version of the FAB that can include text.
  */
@@ -161,7 +184,9 @@ export interface ButtonExtendedFabProps<Framework extends "svelte" | "vue">
      */
     label?: string;
 }
+// #endregion: --- Extended FAB Button Props
 
+// #region:    --- Button Group Props
 /**
  * Properties for a button group, which is a collection of buttons that can be toggled.
  */
@@ -184,3 +209,4 @@ export interface ButtonGroupProps<Multiple extends boolean = false>
      */
     value?: Multiple extends true ? string[] : string | null;
 }
+// #endregion: --- Button Group Props
