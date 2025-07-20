@@ -79,8 +79,13 @@ export interface ButtonIconProps<
 > extends LinkComponent<Framework, Link>,
 		ButtonBaseProps,
 		ButtonWithShapeProps,
-		ButtonWithVariantProps,
-		ButtonWithIconProps<Framework> {
+		ButtonWithVariantProps {
+	/**
+	 * Icon to be displayed in the button.
+	 * The icon can be a string representing a MaterialSymbols icon, or a Snippet in Svelte.
+	 */
+	icon: IconProp<Framework>;
+
 	/**
 	 * Width of the icon button, affecting its shape and size.
 	 */
@@ -111,6 +116,15 @@ export interface ButtonToggleProps<
 	Framework extends "svelte" | "vue",
 	Link extends Href = undefined,
 > extends ButtonStandardProps<Framework, Link>,
+		ButtonWithValueProps {}
+
+/**
+ * Properties for a toggle icon button, which can be used in button groups or as standalone toggle button.
+ */
+export interface ButtonToggleIconProps<
+	Framework extends "svelte" | "vue",
+	Link extends Href = undefined,
+> extends ButtonIconProps<Framework, Link>,
 		ButtonWithValueProps {}
 
 /**

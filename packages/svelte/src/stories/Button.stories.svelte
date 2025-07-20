@@ -18,12 +18,6 @@
 					type: { summary: "MaterialSymbol | Snippet" },
 				},
 			},
-			target: {
-				if: {
-					arg: "href",
-					neq: undefined,
-				},
-			},
 		},
 		args: {
 			label: "Button",
@@ -84,5 +78,15 @@
 		<Button {...args} variant="text" shape="squared" />
 		<Button {...args} variant="text" icon="star" />
 		<Button {...args} variant="text" disabled icon="star" />
+	{/snippet}
+</Story>
+
+<Story name="Sizes">
+	{#snippet template(args)}
+		<Button {...args} size="xs" />
+		<Button {...args} size="sm" />
+		<Button {...args} size="md" />
+		<Button {...args} size="lg" />
+		<Button {...args} size="xl" />
 	{/snippet}
 </Story>

@@ -67,7 +67,7 @@
 			border-radius: 1.75rem;
 		}
 	}
-	/* #endregion: --- Border radius */
+	/* #endregion: --- Shape */
 
 	/* #region:    --- Variants */
 	&--elevated,
@@ -129,4 +129,71 @@
 
 		@include mixins.focus-ring();
 	}
+}
+
+.felt-icon-button {
+	gap: unset;
+	padding: unset;
+
+	/* #region:    --- Sizes */
+	&.felt-button--xs {
+		width: 2rem;
+
+		&.felt-button--narrow {
+			width: 1.75rem;
+		}
+
+		&.felt-button--wide {
+			width: 2.5rem;
+		}
+	}
+
+	&.felt-button--sm {
+		width: 2.5rem;
+
+		&.felt-button--narrow {
+			width: 2rem;
+		}
+
+		&.felt-button--wide {
+			width: 3.25rem;
+		}
+	}
+
+	&.felt-button--md {
+		width: 3.5rem;
+
+		&.felt-button--narrow {
+			width: 3rem;
+		}
+
+		&.felt-button--wide {
+			width: 4.5rem;
+		}
+	}
+
+	&.felt-button--lg {
+		width: 6rem;
+
+		&.felt-button--narrow {
+			width: 4rem;
+		}
+
+		&.felt-button--wide {
+			width: 8rem;
+		}
+	}
+
+	&.felt-button--xl {
+		width: 8.5rem;
+
+		&.felt-button--narrow {
+			width: 6.5rem;
+		}
+
+		&.felt-button--wide {
+			width: 11.5rem;
+		}
+	}
+	/* #endregion: --- Sizes */
 }

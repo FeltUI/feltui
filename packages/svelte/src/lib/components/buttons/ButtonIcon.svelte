@@ -1,6 +1,6 @@
 <script lang="ts" generics="Link extends Href = undefined">
 	import { getButtonAttributes } from "@feltui/shared/components";
-	import type { ButtonProps } from "./props";
+	import type { ButtonIconProps } from "./props";
 	import { Context, ripple, Icon } from "$lib";
 	import {
 		buttonSymbols,
@@ -13,7 +13,7 @@
 	let {
 		disabled = false,
 		href,
-		label,
+		width = "default",
 		size = "md",
 		variant = "elevated",
 		icon,
@@ -30,7 +30,7 @@
 		type,
 		children,
 		...props
-	}: ButtonProps<Link> = $props();
+	}: ButtonIconProps<Link> = $props();
 	// #endregion: --- Props
 
 	// #region:    --- Context
@@ -85,7 +85,9 @@
 				realVariant,
 				shape,
 				size,
+				width,
 			},
+			classes: ["felt-icon-button"],
 		})
 	);
 	// #endregion: --- $derived
@@ -94,10 +96,11 @@
 <!--
 @component
 
-Buttons prompt most actions in a UI.
-You can import this component as `Button` or `Buttons.Standard`.
+Icon buttons help people perform minor actions quickly and easily.
+You can import this component as `IconButton` or `Buttons.Icon`.
 
-This component comes with 5 variants, each different styles and purposes. It also comes with 5 sizes (from `xs` to `xl`) and 2 shapes (`rounded` and `squared`).
+Like the standard button component, it comes with 5 variants, each different styles and purposes. It also comes with 5 sizes (from `xs` to `xl`) and 2 shapes (`rounded` and `squared`).
+A difference is that this component also has a `width` prop, which can be set to `narrow`, or `wide` to change the appearance of the button.
 
 Of course, this component is fully accessible and supports all the features you would expect from a button, such as `disabled`, `icon`, `ripple`.
 
@@ -112,13 +115,9 @@ Of course, this component is fully accessible and supports all the features you 
 	{...props}
 	{...getActionableEventHandlers({ disabled, ...props })}
 >
-	{#if icon && typeof icon === "string"}
+	{#if typeof icon === "string"}
 		<Icon name={icon} size={iconSize} />
 	{:else}
 		{@render icon?.()}
 	{/if}
-
-	<span class="felt-button__label">
-		{label}
-	</span>
 </button>
