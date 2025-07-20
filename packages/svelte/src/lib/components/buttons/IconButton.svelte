@@ -1,5 +1,8 @@
 <script lang="ts" generics="Link extends Href = undefined">
-    import { getButtonAttributes } from "@feltui/shared/components";
+    import {
+        getButtonAttributes,
+        getButtonVariant,
+    } from "@feltui/shared/components";
     import type { ButtonIconProps } from "./props";
     import { Context, ripple, Icon } from "$lib";
     import {
@@ -39,27 +42,17 @@
     // #endregion: --- Context
 
     // #region:    --- $derived
-    const realVariant = $derived.by(() => {
-        if (variant !== "tonal") {
-            return variant;
-        }
-
-        switch (true) {
-            case elevated:
-                return "elevated";
-            case unelevated:
-                return "unelevated";
-            case outlined:
-                return "outlined";
-            case text:
-                return "text";
-            case filled:
-                return "filled";
-            case tonal:
-            default:
-                return "tonal";
-        }
-    });
+    const realVariant = $derived(
+        getButtonVariant({
+            variant,
+            tonal,
+            elevated,
+            unelevated,
+            outlined,
+            filled,
+            text,
+        })
+    );
 
     const attributes = $derived(
         getButtonAttributes({
