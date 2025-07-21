@@ -2,8 +2,9 @@ import Button from "./Button.svelte";
 import IconButton from "./IconButton.svelte";
 import ToggleButton from "./ToggleButton.svelte";
 import ToggleIconButton from "./ToggleIconButton.svelte";
+import FabButton from "./FabButton.svelte";
 
-export { Button, IconButton, ToggleButton, ToggleIconButton };
+export { Button, IconButton, ToggleButton, ToggleIconButton, FabButton };
 
 /**
  * Buttons prompt most actions in a UI. There are a wide variety of buttons, each with different purposes.
@@ -49,4 +50,14 @@ export const Buttons = {
      * You can import this component as `ToggleIconButton` or `Buttons.ToggleIcon`.
      */
     ToggleIcon: ToggleIconButton,
+
+    /**
+     * Floating Action Buttons (FABs) are used for primary actions in a UI, typically representing the most important action on a screen.
+     * You can import this component as `FabButton` or `Buttons.Fab`.
+     *
+     * This component comes with 6 predefined colors to choose from and comes with 3 sizes (from `sm` to `lg`).
+     *
+     * Of course, this component is fully accessible and supports all the features you would expect from a button, such as `disabled`, `icon`, `ripple`.
+     */
+    Fab: FabButton,
 };

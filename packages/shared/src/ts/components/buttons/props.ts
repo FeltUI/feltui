@@ -168,16 +168,31 @@ export type ButtonToggleIconProps<Framework extends "svelte" | "vue"> =
 /**
  * Properties for a floating action button (FAB), which is typically used for primary actions.
  */
-export type ButtonFabProps<Framework extends "svelte" | "vue"> = Omit<
-    ClickableComponent,
-    "size"
-> &
-    ButtonWithIconProps<Framework> & {
-        /**
-         * Size of the FAB button.
-         */
-        size?: Extract<SizeProp, "sm" | "md" | "lg">;
-    };
+export type ButtonFabProps<Framework extends "svelte" | "vue"> =
+    ClickableComponent &
+        ButtonWithIconProps<Framework> & {
+            /**
+             * Icon to be displayed in the button.
+             * The icon can be a string representing a MaterialSymbols icon, or a Snippet in Svelte.
+             */
+            icon: IconProp<Framework>;
+
+            /**
+             * Size of the FAB button.
+             */
+            size?: Extract<SizeProp, "sm" | "md" | "lg">;
+
+            /**
+             * Color mapping of the FAB button. Will change the background and font color.
+             */
+            color?:
+                | "primary"
+                | "secondary"
+                | "tertiary"
+                | "primary-container"
+                | "secondary-container"
+                | "tertiary-container";
+        };
 // #endregion: --- FAB Button Props
 
 // #region:    --- Extended FAB Button Props

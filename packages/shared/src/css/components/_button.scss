@@ -81,7 +81,7 @@
     }
 
     &--elevated {
-        box-shadow: var(--elevation-1);
+        @include mixins.elevate(1);
     }
 
     &--filled {
@@ -115,7 +115,7 @@
             @include mixins.overlay(0.1);
         }
 
-        &:active {
+        &:active:not(.felt-fab-button) {
             &.felt-button--xs,
             &.felt-button--sm {
                 border-radius: 0.5rem;
@@ -228,4 +228,50 @@
         }
         /* #endregion: --- Variant */
     }
+}
+
+.felt-fab-button {
+    width: var(--fab-size);
+    height: var(--fab-size);
+
+    @include mixins.elevate(2);
+
+    @each $color
+        in (
+            "primary-container",
+            "secondary-container",
+            "tertiary-container",
+            "primary",
+            "secondary",
+            "tertiary"
+        )
+    {
+        &--#{$color} {
+            background-color: var(--#{$color});
+            --ripple-color: var(--on-#{$color});
+        }
+    }
+
+    /* #region:    --- Size */
+    &.felt-button--sm {
+        width: 3.5rem;
+        height: 3.5rem;
+
+        border-radius: 1rem;
+    }
+
+    &.felt-button--md {
+        width: 5rem;
+        height: 5rem;
+
+        border-radius: 1.25rem;
+    }
+
+    &.felt-button--lg {
+        width: 6rem;
+        height: 6rem;
+
+        border-radius: 1.75rem;
+    }
+    /* #endregion: --- Size */
 }

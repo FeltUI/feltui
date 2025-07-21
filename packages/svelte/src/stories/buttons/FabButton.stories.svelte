@@ -1,0 +1,100 @@
+<script module>
+    import { defineMeta } from "@storybook/addon-svelte-csf";
+    import { Buttons } from "$lib";
+
+    import "@feltui/shared/css";
+
+    // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
+    const { Story } = defineMeta({
+        title: "Components/Buttons/FAB Button",
+        component: Buttons.Fab,
+        argTypes: {
+            icon: {
+                table: {
+                    type: { summary: "MaterialSymbol | Snippet" },
+                },
+            },
+        },
+        args: {
+            icon: "edit",
+        },
+    });
+</script>
+
+<!--
+	FAB buttons come in 6 color mappings, which can be set using the `color` prop.
+-->
+<Story name="Colors">
+    {#snippet template(args)}
+        <Buttons.Fab {...args} />
+        <Buttons.Fab {...args} color="secondary-container" />
+        <Buttons.Fab {...args} color="tertiary-container" />
+        <Buttons.Fab {...args} color="primary" />
+        <Buttons.Fab {...args} color="secondary" />
+        <Buttons.Fab {...args} color="tertiary" />
+        <Buttons.Fab {...args} disabled />
+    {/snippet}
+</Story>
+
+<!--
+	FAB Buttons come in 3 sizes, from `sm` to `lg`.
+    Choose the size based on the visual hierarchy of your UI.
+	You can use the `size` prop to change the size of the button.
+-->
+<Story name="Sizes">
+    {#snippet template(args)}
+        <Buttons.Fab {...args} size="sm" />
+        <Buttons.Fab {...args} size="md" />
+        <Buttons.Fab {...args} size="lg" />
+    {/snippet}
+</Story>
+
+<!--
+	You can easily change the icon of the button by using the `icon` prop.
+	For Material symbols, you can pass the name of the icon as a string.
+
+	You can also pass a custom icon, such as an SVG, by using the `icon` prop as a Svelte snippet.
+-->
+<Story name="Icon">
+    <script>
+        import { Buttons } from "$lib";
+    </script>
+
+    {#snippet template(args)}
+        <Buttons.Fab {...args} />
+        <Buttons.Fab icon="star" />
+        <Buttons.Fab label="Custom icon">
+            {#snippet icon()}
+                <svg
+                    version="1.0"
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 64 64"
+                    enable-background="new 0 0 64 64"
+                    xml:space="preserve"
+                    fill="#000000"
+                >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                    <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <g id="SVGRepo_iconCarrier">
+                        <g>
+                            <path
+                                fill="#394240"
+                                d="M48,5c-4.418,0-8.418,1.793-11.312,4.688L32,14.344l-4.688-4.656C24.418,6.793,20.418,5,16,5 C7.164,5,0,12.164,0,21c0,4.418,2.852,8.543,5.75,11.438l23.422,23.426c1.562,1.562,4.094,1.562,5.656,0L58.188,32.5 C61.086,29.605,64,25.418,64,21C64,12.164,56.836,5,48,5z M32,47.375L11.375,26.75C9.926,25.305,8,23.211,8,21c0-4.418,3.582-8,8-8 c2.211,0,4.211,0.895,5.656,2.344l7.516,7.484c1.562,1.562,4.094,1.562,5.656,0l7.516-7.484C43.789,13.895,45.789,13,48,13 c4.418,0,8,3.582,8,8c0,2.211-1.926,4.305-3.375,5.75L32,47.375z"
+                            />
+                            <path
+                                fill="#F76D57"
+                                d="M32,47.375L11.375,26.75C9.926,25.305,8,23.211,8,21c0-4.418,3.582-8,8-8c2.211,0,4.211,0.895,5.656,2.344 l7.516,7.484c1.562,1.562,4.094,1.562,5.656,0l7.516-7.484C43.789,13.895,45.789,13,48,13c4.418,0,8,3.582,8,8 c0,2.211-1.926,4.305-3.375,5.75L32,47.375z"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            {/snippet}
+        </Buttons.Fab>
+    {/snippet}
+</Story>
