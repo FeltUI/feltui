@@ -1,17 +1,17 @@
 <script lang="ts">
-    import {
-        getButtonAttributes,
-        getButtonVariant,
-    } from "@feltui/shared/components";
-    import type { ButtonIconProps } from "./props";
-    import { Context, ripple, Icon } from "$lib";
+    import { Context, Icon, ripple } from "$lib";
     import {
         buttonSymbols,
         createFeltClass,
         getActionableEventHandlers,
     } from "@feltui/shared";
+    import {
+        getButtonAttributes,
+        getButtonVariant,
+    } from "@feltui/shared/components";
     import { getContext } from "svelte";
     import type { ButtonGroupPropsCtx } from "./Group.svelte";
+    import type { ButtonIconProps } from "./props";
 
     // #region:    --- Props
     let {

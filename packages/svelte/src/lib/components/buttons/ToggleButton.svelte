@@ -8,10 +8,10 @@
         buttonPropsDefaults,
         getButtonAttributes,
     } from "@feltui/shared/components";
-    import Button from "./Button.svelte";
-    import type { ButtonToggleProps } from "./props";
     import { getContext } from "svelte";
+    import Button from "./Button.svelte";
     import type { ButtonGroupPropsCtx } from "./Group.svelte";
+    import type { ButtonToggleProps } from "./props";
 
     // #region:    --- Props
     let { toggled = $bindable(false), ...props }: ButtonToggleProps = $props();
