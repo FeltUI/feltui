@@ -203,6 +203,25 @@
         }
     }
     /* #endregion: --- Sizes */
+
+    /* #region:    --- Target Size */
+    &.felt-button--xs,
+    &.felt-button--sm {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: max(100%, 3rem);
+            height: 3rem;
+
+            background-color: transparent;
+
+            transform: translate(-50%, -50%);
+        }
+    }
+    /* #endregion: --- Target Size */
 }
 
 .felt-toggle-button {
@@ -277,4 +296,90 @@
         border-radius: 1.75rem;
     }
     /* #endregion: --- Size */
+}
+
+.felt-button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+
+    gap: 0.5rem;
+
+    &:not(&--connected) > .felt-icon-button {
+        &.felt-button--xs {
+            margin-inline: 0.3125rem;
+
+            &:first-child {
+                margin-inline-start: 0;
+            }
+
+            &:last-child {
+                margin-inline-end: 0;
+            }
+        }
+
+        &.felt-button--sm {
+            margin-inline: 0.125rem;
+
+            &:first-child {
+                margin-inline-start: 0;
+            }
+
+            &:last-child {
+                margin-inline-end: 0;
+            }
+        }
+    }
+
+    &--connected {
+        width: 100%;
+
+        gap: 0.125rem;
+
+        & > .felt-button--xs,
+        & > .felt-button--sm {
+            min-width: 3rem;
+        }
+
+        /* #region:    --- Shape */
+        & > .felt-button {
+            &--xs {
+                border-radius: 0.25rem;
+            }
+
+            &--sm,
+            &--md {
+                border-radius: 0.5rem;
+            }
+
+            &--lg {
+                border-radius: 1rem;
+            }
+
+            &--xl {
+                border-radius: 1.25rem;
+            }
+
+            &:first-child.felt-button--rounded {
+                border-top-left-radius: calc(var(--button-height, 3.5rem) / 2);
+                border-bottom-left-radius: calc(
+                    var(--button-height, 3.5rem) / 2
+                );
+            }
+            &:last-child.felt-button--rounded {
+                border-top-right-radius: calc(var(--button-height, 3.5rem) / 2);
+                border-bottom-right-radius: calc(
+                    var(--button-height, 3.5rem) / 2
+                );
+            }
+
+            &[aria-pressed] {
+                border-radius: calc(var(--button-height, 3.5rem) / 2);
+            }
+        }
+        /* #endregion: --- Shape */
+    }
 }

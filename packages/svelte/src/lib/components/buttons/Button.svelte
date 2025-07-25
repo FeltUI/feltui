@@ -1,15 +1,17 @@
 <script lang="ts">
-    import {
-        getButtonAttributes,
-        getButtonVariant,
-    } from "@feltui/shared/components";
-    import type { ButtonProps } from "./props";
-    import { Context, ripple, Icon } from "$lib";
+    import { Context, Icon, ripple } from "$lib";
     import {
         buttonSymbols,
         createFeltClass,
         getActionableEventHandlers,
     } from "@feltui/shared";
+    import {
+        getButtonAttributes,
+        getButtonVariant,
+    } from "@feltui/shared/components";
+    import { getContext } from "svelte";
+    import type { ButtonGroupPropsCtx } from "./Group.svelte";
+    import type { ButtonProps } from "./props";
 
     // #region:    --- Props
     let {
@@ -38,6 +40,10 @@
 
     // #region:    --- Context
     const hasPopup = new Context(buttonSymbols.hasPopup, false);
+
+    const groupProps = getContext<ButtonGroupPropsCtx | undefined>(
+        buttonSymbols.groupProps
+    );
     // #endregion: --- Context
 
     // #region:    --- Derived
@@ -51,28 +57,40 @@
                 outlined,
                 filled,
                 text,
+                ...groupProps,
             },
             // If it's a toggle button, we don't want to use the text variant
             props.class?.includes("felt-toggle-button")
         )
     );
 
+    const realDisabled = $derived(groupProps?.disabled || disabled);
+
+    const realRipple = $derived({
+        noRipple: noRipple || groupProps?.noRipple,
+        rippleColor: rippleColor || groupProps?.rippleColor,
+    });
+
+    const realShape = $derived(groupProps?.shape || shape);
+
     const attributes = $derived(
         getButtonAttributes({
             href,
-            disabled,
+            disabled: realDisabled,
             hasPopup: hasPopup.value,
             type,
             ...props,
         })
     );
 
+    const realSize = $derived(groupProps?.size || size);
+
     const iconSize = $derived(
-        size === "xs" || size === "sm"
+        realSize === "xs" || realSize === "sm"
             ? "1.25rem"
-            : size === "md"
+            : realSize === "md"
               ? "1.5rem"
-              : size === "lg"
+              : realSize === "lg"
                 ? "2rem"
                 : "2.5rem"
     );
@@ -82,11 +100,12 @@
             props,
             bemClasses: {
                 realVariant,
-                shape,
-                size,
+                shape: realShape,
+                size: realSize,
             },
         })
     );
+
     // #endregion: --- Derived
 </script>
 
@@ -103,13 +122,13 @@ Of course, this component is fully accessible and supports all the features you 
 -->
 <button
     {@attach ripple({
-        disabled: noRipple || disabled,
-        color: rippleColor,
+        disabled: realRipple.noRipple || realDisabled,
+        color: realRipple.rippleColor,
     })}
     {...props}
     {...attributes}
     class={cls}
-    {...getActionableEventHandlers({ disabled, ...props })}
+    {...getActionableEventHandlers({ disabled: realDisabled, ...props })}
 >
     {#if icon}
         {#if icon && typeof icon === "string"}

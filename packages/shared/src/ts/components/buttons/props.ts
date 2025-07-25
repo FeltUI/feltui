@@ -69,6 +69,18 @@ export type ButtonWithVariantProps = {
      */
     tonal?: boolean;
 };
+
+export type ButtonWithVariantNoTextProps = Omit<
+    ButtonWithVariantProps,
+    "text"
+> & {
+    /**
+     * The visual style of the button, which can affect its appearance and interaction.
+     * If this prop is specified, it will overwrite all other variants defined with boolean props.
+     * By default, the button will have a tonal style.
+     */
+    variant?: Exclude<ButtonWithVariantProps["variant"], "text">;
+};
 // #endregion: --- Button With Variant Props
 
 // #region:    --- Button With Icon Props
@@ -138,14 +150,8 @@ export type ButtonIconProps<Framework extends "svelte" | "vue"> =
  */
 export type ButtonToggleProps<Framework extends "svelte" | "vue"> =
     ButtonStandardProps<Framework> &
-        ButtonWithValueProps & {
-            /**
-             * The visual style of the button, which can affect its appearance and interaction.
-             * If this prop is specified, it will overwrite all other variants defined with boolean props.
-             * By default, the button will have a tonal style.
-             */
-            variant?: Exclude<ButtonWithVariantProps["variant"], "text">;
-        };
+        ButtonWithValueProps &
+        ButtonWithVariantNoTextProps;
 // #endregion: --- Standard Toggle Button Props
 
 // #region:    --- Icon Toggle Button Props
@@ -154,14 +160,8 @@ export type ButtonToggleProps<Framework extends "svelte" | "vue"> =
  */
 export type ButtonToggleIconProps<Framework extends "svelte" | "vue"> =
     ButtonIconProps<Framework> &
-        ButtonWithValueProps & {
-            /**
-             * The visual style of the button, which can affect its appearance and interaction.
-             * If this prop is specified, it will overwrite all other variants defined with boolean props.
-             * By default, the button will have a tonal style.
-             */
-            variant?: Exclude<ButtonWithVariantProps["variant"], "text">;
-        };
+        ButtonWithValueProps &
+        ButtonWithVariantNoTextProps;
 // #endregion: --- Icon Toggle Button Props
 
 // #region:    --- FAB Button Props
@@ -213,24 +213,32 @@ export type ButtonExtendedFabProps<Framework extends "svelte" | "vue"> =
  * Properties for a button group, which is a collection of buttons that can be toggled.
  */
 export type ButtonGroupProps<Multiple extends boolean = false> =
-    ButtonBaseProps & {
-        /**
-         * Whether the group should be connected or not.
-         */
-        connected?: boolean;
+    ButtonBaseProps &
+        ButtonWithShapeProps &
+        ButtonWithVariantNoTextProps & {
+            /**
+             * Whether the group should be connected or not.
+             */
+            connected?: boolean;
 
-        /**
-         * Indiquates whether the button group allows multiple selections.
-         * If true, the value of the selected buttons will be an array.
-         */
-        multiple?: Multiple;
+            /**
+             * Indiquates whether the button group allows multiple selections.
+             * If true, the value of the selected buttons will be an array.
+             */
+            multiple?: Multiple;
 
-        /**
-         * Value of the selected button(s) in the group.
-         * If `multiple` is true, this will be an array of values.
-         */
-        value?: Multiple extends true ? string[] : string | null;
-    };
+            /**
+             * Value of the selected button(s) in the group.
+             * If `multiple` is true, this will be an array of values.
+             */
+            value?: Multiple extends true ? string[] : string | null;
+
+            /**
+             * Indicates whether the button group requires at least one button to be selected.
+             * If true, the group will not allow deselection of all buttons.
+             */
+            requireSelection?: boolean;
+        };
 // #endregion: --- Button Group Props
 
 export const buttonPropsDefaults = {

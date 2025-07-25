@@ -3,8 +3,16 @@ import IconButton from "./IconButton.svelte";
 import ToggleButton from "./ToggleButton.svelte";
 import ToggleIconButton from "./ToggleIconButton.svelte";
 import FabButton from "./FabButton.svelte";
+import ButtonGroup from "./Group.svelte";
 
-export { Button, IconButton, ToggleButton, ToggleIconButton, FabButton };
+export {
+    Button,
+    IconButton,
+    ToggleButton,
+    ToggleIconButton,
+    FabButton,
+    ButtonGroup,
+};
 
 /**
  * Buttons prompt most actions in a UI. There are a wide variety of buttons, each with different purposes.
@@ -60,4 +68,15 @@ export const Buttons = {
      * Of course, this component is fully accessible and supports all the features you would expect from a button, such as `disabled`, `icon`, `ripple`.
      */
     Fab: FabButton,
+
+    /**
+     * Button groups allow users to group related buttons together, providing a cohesive user experience.
+     * You can import this component as `ButtonGroup` or `Buttons.Group`.
+     *
+     * Button groups can be single-select or multi-select, depending on the `multiple` prop.
+     *
+     * The `value` prop will be populated with the `name` attribute of the toggled buttons, so make sure to set the `name` prop on each button in the group.
+     * If not set, the `name` will default to the button's `label` or `icon` (that is, if it's a string. If not, a unique identifier will be used) prop.
+     */
+    Group: ButtonGroup,
 };
