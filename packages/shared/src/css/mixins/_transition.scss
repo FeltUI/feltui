@@ -1,0 +1,139 @@
+@use "sass:list";
+@use "sass:map";
+
+/** https://m3.material.io/styles/motion/overview/specs#e3e4f10b-6314-47b7-9051-988066081fa0 */
+
+$spring-speeds: ("fast", "slow", "default");
+
+$spring-types: ("spatial", "effects", "xspacial", "xeffects");
+
+@mixin spring($type, $speed: "default") {
+    @if not list.index($spring-speeds, $speed) {
+        @error "Invalid speed value: #{$speed}. Use 'fast', 'slow', or 'default'.";
+    }
+
+    @if not list.index($spring-types, $type) {
+        @error "Invalid type value: #{$type}. Use one of: #{list.join($spring-types, $separator: ", ")}.";
+    }
+
+    $spring-map: (
+        "xspacial": (
+            "fast": (
+                cubic-bezier(0.42, 1.67, 0.21, 0.9),
+                0.35s,
+            ),
+            "default": (
+                cubic-bezier(0.38, 1.21, 0.22, 1),
+                0.5s,
+            ),
+            "slow": (
+                cubic-bezier(0.39, 1.29, 0.35, 0.98),
+                0.65s,
+            ),
+        ),
+        "xeffects": (
+            "fast": (
+                cubic-bezier(0.31, 0.94, 0.34, 1),
+                0.15s,
+            ),
+            "default": (
+                cubic-bezier(0.34, 0.8, 0.34, 1),
+                0.2s,
+            ),
+            "slow": (
+                cubic-bezier(0.34, 0.88, 0.34, 1),
+                0.3s,
+            ),
+        ),
+        "spatial": (
+            "fast": (
+                cubic-bezier(0.27, 1.06, 0.18, 1),
+                0.35s,
+            ),
+            "default": (
+                cubic-bezier(0.27, 1.06, 0.18, 1),
+                0.5s,
+            ),
+            "slow": (
+                cubic-bezier(0.27, 1.06, 0.18, 1),
+                0.75s,
+            ),
+        ),
+        "effects": (
+            "fast": (
+                cubic-bezier(0.31, 0.94, 0.34, 1),
+                0.15s,
+            ),
+            "default": (
+                cubic-bezier(0.34, 0.8, 0.34, 1),
+                0.2s,
+            ),
+            "slow": (
+                cubic-bezier(0.34, 0.88, 0.34, 1),
+                0.3s,
+            ),
+        ),
+    );
+
+    $spring: map.get($spring-map, $type, $speed);
+
+    transition-timing-function: list.nth($spring, 1);
+    transition-duration: list.nth($spring, 2);
+}
+
+$easing-acceleration-types: ("default", "accelerate", "decelerate");
+$easing-types: ("standard", "emphasized", "legacy");
+
+@mixin easing($acceleration-type: "default", $type: "standard") {
+    @if not list.index($easing-acceleration-types, $acceleration-type) {
+        @error "Invalid acceleration type: #{$acceleration-type}. Use 'default', 'accelerate', or 'decelerate'.";
+    }
+
+    @if not list.index($easing-types, $type) {
+        @error "Invalid type value: #{$type}. Use one of: #{list.join($easing-types, ", ")}.";
+    }
+
+    $easing-map: (
+        "default": (
+            "standard": cubic-bezier(0.2, 0, 0, 1),
+            "emphasized": cubic-bezier(0.25, 0, 0, 1),
+            "legacy": cubic-bezier(0.4, 0, 0.2, 1),
+        ),
+        "accelerate": (
+            "standard": cubic-bezier(0.3, 0, 1, 1),
+            "emphasized": cubic-bezier(0.3, 0, 0.8, 0.15),
+            "legacy": cubic-bezier(0.4, 0, 1, 1),
+        ),
+        "decelerate": (
+            "standard": cubic-bezier(0, 0, 0, 1),
+            "emphasized": cubic-bezier(0.05, 0.7, 0.1, 1),
+            "legacy": cubic-bezier(0, 0, 0.2, 1),
+        ),
+    );
+
+    transition-timing-function: map.get($easing-map, $acceleration-type, $type);
+}
+
+$duration-types: ("short", "medium", "long", "extra-long");
+
+@mixin duration($speed, $strength) {
+    @if not list.index($duration-types, $speed) {
+        @error "Invalid speed value: #{$speed}. Use 'short', 'medium', 'long', or 'extra-long'.";
+    }
+
+    @if $strength < 1 or $strength > 4 {
+        @error "Invalid strength value: #{$strength}. Use from 1 to 4.";
+    }
+
+    $duration-map: (
+        "short": 0,
+        "medium": 0.2,
+        "long": 0.4,
+        "extra-long": 0.6,
+    );
+
+    $duration-to-add: if($speed == "extra-long", 0.1, 0.05);
+
+    transition-duration: #{map.get($duration-map, $speed) + $duration-to-add *
+        $strength}ms;
+}
