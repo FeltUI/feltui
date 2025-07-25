@@ -74,6 +74,14 @@ function isDisabled(node: HTMLElement, options: RippleOptions): boolean {
 }
 
 function createRippleContainer(node: HTMLElement, options: RippleOptions) {
+    const existingContainer = node.querySelector<HTMLElement>(
+        ".felt-ripple__container"
+    );
+    if (existingContainer) {
+        setOptions(existingContainer, options);
+        return existingContainer;
+    }
+
     const rippleContainer = document.createElement("span");
     setOptions(rippleContainer, options);
 
