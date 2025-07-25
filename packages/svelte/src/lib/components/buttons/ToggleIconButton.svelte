@@ -9,7 +9,7 @@
         buttonPropsDefaults,
         getButtonAttributes,
     } from "@feltui/shared/components";
-    import { getContext } from "svelte";
+    import { getContext, setContext } from "svelte";
     import type { ButtonGroupPropsCtx } from "./Group.svelte";
     import type { ButtonToggleIconProps } from "./props";
 
@@ -31,6 +31,7 @@
     const groupProps = getContext<ButtonGroupPropsCtx | undefined>(
         buttonSymbols.groupProps
     );
+    setContext(buttonSymbols.groupProps, undefined);
     // #endregion: --- Context
 
     // #region:    --- Derived
